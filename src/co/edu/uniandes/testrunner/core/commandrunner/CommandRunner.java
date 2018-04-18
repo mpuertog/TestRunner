@@ -18,7 +18,7 @@ public abstract class CommandRunner {
 
 	protected Process process;
 	protected BufferedReader reader;
-	protected final static Logger logger = Logger.getLogger(CommandRunner.class);
+	protected final static Logger logger = Logger.getRootLogger();
 
 	/**
 	 * Detecta de forma automática el sistema operativo y selecciona el runner

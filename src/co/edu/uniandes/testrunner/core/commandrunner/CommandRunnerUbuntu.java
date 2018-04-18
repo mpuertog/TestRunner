@@ -21,7 +21,8 @@ public class CommandRunnerUbuntu extends CommandRunner {
 	public void runCommand(String command) {
 		String s = null;
 		try {
-			List<String> commandList = Arrays.asList(ApplicationConstants.BASH, ApplicationConstants.BASH_PARAM, command);
+			List<String> commandList = Arrays.asList(ApplicationConstants.BASH, ApplicationConstants.BASH_PARAM,
+					command);
 			ProcessBuilder processBuilder = new ProcessBuilder(commandList);
 			processBuilder.redirectErrorStream(true);
 			logger.info(String.format(ApplicationLogMessages.LOG_RUNNING_COMMAND, command));

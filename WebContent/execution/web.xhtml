@@ -19,7 +19,7 @@
 			<p:outputLabel value="Procesando..." />
 		</p:dialog>
 
-		<h:form id="webSuiteForm">
+		<h:form id="pwaForm">
 			<p:fieldset legend="PWA" toggleable="true" toggleSpeed="500">
 				<h:panelGrid columns="2" cellpadding="5">
 					<h:graphicImage
@@ -28,33 +28,40 @@
 					<h:outputText
 						value="Evaluación  de características de PWA (Progressive Web App) utilizando la herramienta Google Lighthouse."></h:outputText>
 					<h:outputText value="Ingrese la URL a analizar: " style="width=85%" />
-					<p:inputText id="lighthouseInput" value="#{webMB.targetURL}"
-						size="50" maxlength="1000">
+					<p:inputText id="lighthouseInput" value="#{webMB.lighthouseURL}"
+						size="50" maxlength="1000" required="true"
+						requiredMessage="Debe ingresar una URL para la evaluación de PWA">
 						<p:watermark for="lighthouseInput" value="http://www.example.com" />
 					</p:inputText>
-					<p:commandButton value="Evaluar..." update="layoutForm:messages"
+					<p:commandButton value="Ejecutar" update="layoutForm:messages"
 						actionListener="#{webMB.lighthouseTest()}" partialSubmit="true"
-						process="@form" async="true" />
+						process="pwaForm" async="true" />
 				</h:panelGrid>
 			</p:fieldset>
+		</h:form>
 
-			<p:fieldset legend="E2E" toggleable="true" toggleSpeed="500">
+		<h:form id="randomForm">
+			<p:fieldset legend="Random Testing" toggleable="true"
+				toggleSpeed="500">
 				<h:panelGrid columns="2" cellpadding="5">
 					<h:graphicImage value="/resources/algaworks/images/cypress.png"
 						width="100px" />
 					<h:outputText
-						value="Ejecución de pruebas End to End utilizando la plataforma Cypress."></h:outputText>
+						value="Ejecución de pruebas aleatorias utilizando la plataforma Cypress."></h:outputText>
 					<h:outputText value="Ingrese la URL a analizar: " style="width=85%" />
-					<p:inputText id="cypressInput" value="#{webMB.targetURL}" size="50"
-						maxlength="1000">
+					<p:inputText id="cypressInput" value="#{webMB.cypressURL}"
+						size="50" maxlength="1000" required="true"
+						requiredMessage="Debe ingresar una URL para ejecutar Random Testing">
 						<p:watermark for="cypressInput" value="http://www.example.com" />
 					</p:inputText>
 					<p:commandButton value="Evaluar..." update="layoutForm:messages"
-						actionListener="#{webMB.cypressTest()}" partialSubmit="true"
-						process="@form" async="true" />
+						actionListener="#{webMB.cypressRandomTest()}" partialSubmit="true"
+						process="randomForm" async="true" />
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
+
+
 	</ui:define>
 
 </ui:composition>

@@ -15,6 +15,9 @@ public class ApplicationConstants {
 	public static final String LINE_SEPARATOR = "line.separator";
 	public static final String BASH = "bash";
 	public static final String BASH_PARAM = "-c";
+	public static final String URL_WILDCARD = "URL";
+	public static final String USER_HOME_LINUX = "cd";
+	public static final String USER_HOME_WINDOWS = "cd %userprofile%";
 	public static final String COLON = ": ";
 	public static final String WHITE_SPACE = " ";
 	public static final String LIGHTHOUSE_POJO = "LighthousePOJO";
