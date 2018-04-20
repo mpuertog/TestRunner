@@ -13,10 +13,8 @@ public class WebConstants {
 	public static final String LIGHTHOUSE_BASE = "lighthouse --output json --chrome-flags=\"--headless\" --output-path=./lighthouse-results.json ";
 	public static final String LIGHTHOUSE_FINISHED = "Análisis de PWA terminado sobre: ";
 
-	public static final String WEB_PROJECTS_URI = "/home/santiago/TestRunner/webTest";
-
-	public static final String CYPRESS_RUN = "./node_modules/.bin/cypress run %s";
-	public static final String CYPRESS_PARAMETERS = String.format("-P %s", WEB_PROJECTS_URI);
+	public static final String CYPRESS_RUN = "./node_modules/.bin/cypress run -P %s";
+	public static final String CYPRESS_MONEY_SCRIPT = "/cypress/integration/monkey.js";
 	public static final String CYPRESS_FINISHED = "Test End to End finalizado sobre: ";
 
 }
