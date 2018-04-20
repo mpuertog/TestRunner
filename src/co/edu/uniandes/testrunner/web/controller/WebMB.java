@@ -38,8 +38,7 @@ public class WebMB extends BaseMB {
 		String cypressMonkeyTestPath = properties.getProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH);
 		WildardReplaceUtil wildcardUtil = new WildardReplaceUtil();
 		wildcardUtil.replaceCypressMonkey(cypressMonkeyTestPath + WebConstants.CYPRESS_MONEY_SCRIPT, cypressURL);
-		CommandRunner.getRunner()
-				.runCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
+		CommandRunner.getRunner().runCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
 		infoMessage(WebConstants.CYPRESS_FINISHED + cypressURL);
 	}
 

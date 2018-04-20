@@ -15,10 +15,11 @@ public class PathConfiguratorUbuntu extends PathConfigurator {
 	@Override
 	public Properties buildPathProperties() {
 		Properties properties = new Properties();
-		properties.setProperty(PathConfiguratorPropertyKeys.USER_PROFILE,
-				System.getenv(PathConfiguratorPropertyKeys.USER_PROFILE));
+		properties.setProperty(PathConfiguratorPropertyKeys.USER_PROFILE_WINDOWS,
+				System.getProperty(PathConfiguratorPropertyKeys.USER_PROFILE_LINUX));
 		properties.setProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH,
-				System.getenv(PathConfiguratorPropertyKeys.USER_PROFILE) + ApplicationConstants.CYPRESS_PROJECT_DIR);
+				System.getProperty(PathConfiguratorPropertyKeys.USER_PROFILE_LINUX)
+						+ ApplicationConstants.CYPRESS_PROJECT_DIR + "/");
 		return properties;
 	}
 
