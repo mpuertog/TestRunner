@@ -1,7 +1,6 @@
 describe('Random testing for URL ', function() {
-    it('visits los estudiantes and survives monkeys', function() {
+    it('visits URL and survives monkeys', function() {
         cy.visit('URL');
-        cy.contains('Cerrar').click();
         cy.wait(1000);
         randomClick(10);
     })
