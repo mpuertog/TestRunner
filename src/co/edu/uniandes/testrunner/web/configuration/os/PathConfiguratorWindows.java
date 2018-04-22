@@ -16,10 +16,11 @@ public class PathConfiguratorWindows extends PathConfigurator {
 	@Override
 	public Properties buildPathProperties() {
 		Properties properties = new Properties();
-		properties.setProperty(PathConfiguratorPropertyKeys.USER_PROFILE_WINDOWS,
+		properties.setProperty(PathConfiguratorPropertyKeys.USER_PROFILE,
 				System.getenv(PathConfiguratorPropertyKeys.USER_PROFILE_WINDOWS));
 		properties.setProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH,
-				System.getenv(PathConfiguratorPropertyKeys.USER_PROFILE_WINDOWS) + ApplicationConstants.CYPRESS_PROJECT_DIR);
+				System.getenv(PathConfiguratorPropertyKeys.USER_PROFILE_WINDOWS)
+						+ ApplicationConstants.CYPRESS_PROJECT_DIR);
 		return properties;
 	}
 

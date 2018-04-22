@@ -15,7 +15,7 @@ public class PathConfiguratorUbuntu extends PathConfigurator {
 	@Override
 	public Properties buildPathProperties() {
 		Properties properties = new Properties();
-		properties.setProperty(PathConfiguratorPropertyKeys.USER_PROFILE_WINDOWS,
+		properties.setProperty(PathConfiguratorPropertyKeys.USER_PROFILE,
 				System.getProperty(PathConfiguratorPropertyKeys.USER_PROFILE_LINUX));
 		properties.setProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH,
 				System.getProperty(PathConfiguratorPropertyKeys.USER_PROFILE_LINUX)

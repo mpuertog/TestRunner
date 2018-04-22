@@ -3,30 +3,30 @@ package co.edu.uniandes.testrunner.web.persistance.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the TEST_DETAIL database table.
  * 
  */
 @Entity
-@Table(name="TEST_DETAIL")
-@NamedQuery(name="TestDetail.findAll", query="SELECT t FROM TestDetail t")
+@Table(name = "TEST_DETAIL")
+@NamedQuery(name = "TestDetail.findAll", query = "SELECT t FROM TestDetail t")
 public class TestDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(name="FILE_CONTENT")
+	@Lob
+	@Column(name = "FILE_CONTENT")
 	private String fileContent;
 
-	@Column(name="FILE_NAME")
+	@Column(name = "FILE_NAME")
 	private String fileName;
 
-	//bi-directional many-to-one association to TestRun
+	// bi-directional many-to-one association to TestRun
 	@ManyToOne
-	@JoinColumn(name="TEST_ID")
+	@JoinColumn(name = "TEST_ID")
 	private TestRun testRun;
 
 	public TestDetail() {

@@ -11,6 +11,8 @@ public class FilesConstants {
 
 	public static final String CALABASH_FILENAME = "calabash.json";
 	public static final String CYPRESS_FILENAME = "cypress.json";
-	public static final String LIGHTHOUSE_FILENAME = "lighthouse.json";
+
+	public static final String LIGHTHOUSE_FILENAME = "lighthouse.json ";
+	public static final String LIGHTHOUSE_PATH = "/TestRunner/webTest/lighthouse/";
 
 }

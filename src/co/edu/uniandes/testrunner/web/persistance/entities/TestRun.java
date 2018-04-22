@@ -30,8 +30,11 @@ public class TestRun implements Serializable {
 	@Column(name = "TEST_TYPE")
 	private String testType;
 
+	@Column(name = "TEST_FRAMEWORK")
+	private String testFramework;
+
 	// bi-directional many-to-one association to TestDetail
-	@OneToMany(mappedBy = "testRun")
+	@OneToMany(mappedBy = "testRun", cascade = CascadeType.PERSIST)
 	private List<TestDetail> testDetails;
 
 	public TestRun() {
@@ -89,6 +92,14 @@ public class TestRun implements Serializable {
 		testDetail.setTestRun(null);
 
 		return testDetail;
+	}
+
+	public String getTestFramework() {
+		return testFramework;
+	}
+
+	public void setTestFramework(String testFramework) {
+		this.testFramework = testFramework;
 	}
 
 }
