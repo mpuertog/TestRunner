@@ -20,6 +20,7 @@ public class ApplicationConstants {
 	public static final String USER_HOME_WINDOWS = "$env:USERPROFILE";
 	public static final String COLON = ": ";
 	public static final String WHITE_SPACE = " ";
+	public static final String SLASH = "/";
 	public static final String CYPRESS_PROJECT_DIR = "/TestRunner/webTest";
 	public static final String LIGHTHOUSE_POJO = "LighthousePOJO";
 	public static final String CALABASH_POJO = "CalabashAndroidPOJO";
