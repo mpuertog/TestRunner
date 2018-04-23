@@ -16,8 +16,13 @@
                 <p:tab title="Cypress">
                     <h:panelGrid columns="2" cellpadding="10">
                         <p:graphicImage value="/resources/algaworks/images/cypress.png" 
-                                        width="90px"/> 
-                        <h:commandLink value="Reporte generado"/>
+                                        width="90px"/>
+                        <p:dataTable>
+                            <p:column>
+                                <h:commandLink value="#{reportesMB.reporteLink}"/>
+                            </p:column>
+                        </p:dataTable>
+                        
                     </h:panelGrid>
                 </p:tab>
                 <p:tab title="Calabash">
