@@ -20,5 +20,10 @@ public class WebConstants {
 	public static final String CYPRESS_MONEY_SCRIPT = "/cypress/integration/monkey.js";
 	public static final String CYPRESS_TYPE = "End to End";
 	public static final String CYPRESS_FINISHED = "Test End to End finalizado sobre: ";
+        public static final String FRAMEWORK_CYPRESS = "Cypress";
+        public static final String FRAMEWORK_CALABASH = "Calabash";
+        public static final String FRAMEWORK_GHERKIN = "Gherkin";
+        public static final String FRAMEWORK_LIGHTHOUSE = "LightHouse";
+        public static final String FRAMEWORK_PITEST= "Pitest";
 
 }

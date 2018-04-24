@@ -12,7 +12,11 @@ import java.util.List;
  */
 @Entity
 @Table(name = "TEST_RUNS")
-@NamedQuery(name = "TestRun.findAll", query = "SELECT t FROM TestRun t")
+@NamedQueries({
+    @NamedQuery(name = "TestRun.findAll", query = "SELECT t FROM TestRun t"),
+    @NamedQuery(name = "TestRun.findByFramework", query = "SELECT t FROM TestRun t WHERE t.testFramework = :framework ")
+})
+
 public class TestRun implements Serializable {
 	private static final long serialVersionUID = 1L;
 
