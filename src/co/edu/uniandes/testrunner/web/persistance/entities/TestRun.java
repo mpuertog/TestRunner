@@ -13,10 +13,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "TEST_RUNS")
-@NamedQueries({
-    @NamedQuery(name = "TestRun.findAll", query = "SELECT t FROM TestRun t"),
-    @NamedQuery(name = "TestRun.findByFramework", query = "SELECT t FROM TestRun t WHERE t.testFramework = :framework ")
-})
+@NamedQueries({ @NamedQuery(name = "TestRun.findAll", query = "SELECT t FROM TestRun t"),
+		@NamedQuery(name = "TestRun.findByFramework", query = "SELECT t FROM TestRun t WHERE t.testFramework = :framework ") })
 
 @XmlRootElement
 public class TestRun implements Serializable {
@@ -39,8 +37,11 @@ public class TestRun implements Serializable {
 	@Column(name = "TEST_FRAMEWORK")
 	private String testFramework;
 
+	@Transient
+	private String downloadLink;
+
 	// bi-directional many-to-one association to TestDetail
-	@OneToMany(mappedBy = "testRun", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "testRun", cascade = CascadeType.ALL)
 	private List<TestDetail> testDetails;
 
 	public TestRun() {
@@ -89,14 +90,12 @@ public class TestRun implements Serializable {
 	public TestDetail addTestDetail(TestDetail testDetail) {
 		getTestDetails().add(testDetail);
 		testDetail.setTestRun(this);
-
 		return testDetail;
 	}
 
 	public TestDetail removeTestDetail(TestDetail testDetail) {
 		getTestDetails().remove(testDetail);
 		testDetail.setTestRun(null);
-
 		return testDetail;
 	}
 
@@ -106,6 +105,14 @@ public class TestRun implements Serializable {
 
 	public void setTestFramework(String testFramework) {
 		this.testFramework = testFramework;
+	}
+
+	public String getDownloadLink() {
+		return downloadLink;
+	}
+
+	public void setDownloadLink(String downloadLink) {
+		this.downloadLink = downloadLink;
 	}
 
 }
