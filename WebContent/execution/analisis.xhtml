@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../WEB-INF/templates/Layout.xhtml">
+
+	<ui:define name="content">
+		<h1 class="aw-page-title">Analisis sobre el set de pruebas de aplicación</h1>
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<h:graphicImage value="/resources/algaworks/images/loading.gif" />
+			<br />
+			<p:outputLabel value="Procesando..." />
+		</p:dialog>
+
+		<h:form id="sourceForm">
+			<p:fieldset legend="PWA" toggleable="true" toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:graphicImage
+						value="/resources/algaworks/images/pwa-lighthouse.png" width="80" />
+					<h:outputText
+						value="Evaluación  de características de PWA (Progressive Web App) utilizando la herramienta Google Lighthouse."></h:outputText>
+					<h:outputText value="Ingrese la URL a analizar: " style="width:85%" />
+					<p:inputText id="lighthouseInput" value="#{webMB.lighthouseURL}"
+						size="50" maxlength="1000" required="true"
+						requiredMessage="Debe ingresar una URL para la evaluación de PWA">
+						<p:watermark for="lighthouseInput" value="http://www.example.com" />
+					</p:inputText>
+					<p:commandButton value="Ejecutar" update="layoutForm:messages"
+						actionListener="#{webMB.lighthouseTest()}" partialSubmit="true"
+						process="pwaForm" async="true" />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+
+		<h:form id="randomForm">
+			<p:fieldset legend="Random Testing" toggleable="true"
+				toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:graphicImage value="/resources/algaworks/images/cypress.png"
+						width="100" />
+					<h:outputText
+						value="Ejecución de pruebas aleatorias utilizando la plataforma Cypress."></h:outputText>
+					<h:outputText value="Ingrese la URL a analizar: " style="width:85%" />
+					<p:inputText id="cypressInput" value="#{webMB.cypressURL}"
+						size="50" maxlength="1000" required="true"
+						requiredMessage="Debe ingresar una URL para ejecutar Random Testing">
+						<p:watermark for="cypressInput" value="http://www.example.com" />
+					</p:inputText>
+					<p:commandButton value="Evaluar..." update="layoutForm:messages"
+						actionListener="#{webMB.cypressRandomTest()}" partialSubmit="true"
+						process="randomForm" async="true" />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
