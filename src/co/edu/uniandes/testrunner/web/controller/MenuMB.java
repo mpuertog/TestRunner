@@ -12,6 +12,7 @@ public class MenuMB extends BaseMB {
 
 	private String testCasesHeader = WebConstants.TEST_CASES_HEADER;
 	private String reportsHeader = WebConstants.REPORT_HEADER;
+	private String analisisHeader = WebConstants.ANALISIS_HEADER;
 	private String aboutHeader = WebConstants.ABOUT_HEADER;
 
 	@PostConstruct
@@ -35,6 +36,14 @@ public class MenuMB extends BaseMB {
 		this.reportsHeader = reportsHeader;
 	}
 
+	public String getAnalisisHeader() {
+		return analisisHeader;
+	}
+
+	public void setAnalisisHeader(String analisisHeader) {
+		this.analisisHeader = analisisHeader;
+	}
+
 	public String getAboutHeader() {
 		return aboutHeader;
 	}
@@ -42,5 +51,4 @@ public class MenuMB extends BaseMB {
 	public void setAboutHeader(String aboutHeader) {
 		this.aboutHeader = aboutHeader;
 	}
-
 }
