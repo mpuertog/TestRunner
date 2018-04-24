@@ -4,7 +4,6 @@ import co.edu.uniandes.testrunner.web.persistance.entities.TestDetail;
 import javax.ejb.Local;
 
 import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
-import java.util.ArrayList;
 import java.util.List;
 
 @Local

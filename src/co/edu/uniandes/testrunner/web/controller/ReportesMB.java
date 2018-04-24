@@ -7,11 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import co.edu.uniandes.testrunner.core.commandrunner.CommandRunner;
 import co.edu.uniandes.testrunner.core.util.ApplicationConstants;
-import co.edu.uniandes.testrunner.core.util.WildardReplaceUtil;
 import co.edu.uniandes.testrunner.web.business.ReportesEJB;
-import co.edu.uniandes.testrunner.web.configuration.os.PathConfiguratorPropertyKeys;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestDetail;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 import co.edu.uniandes.testrunner.web.transversal.WebConstants;
@@ -61,7 +58,8 @@ public class ReportesMB extends BaseMB {
         testListCalabash = reportes.findByFramework(WebConstants.FRAMEWORK_CALABASH);
         testListGherkin = reportes.findByFramework(WebConstants.FRAMEWORK_GHERKIN);
         testListLightHouse = reportes.findByFramework(WebConstants.FRAMEWORK_LIGHTHOUSE);
-        testListLightPitest = reportes.findByFramework(WebConstants.FRAMEWORK_PITEST);        
+        testListLightPitest = reportes.findByFramework(WebConstants.FRAMEWORK_PITEST); 
+        reportTestDetail();
     }
 
     public void reportTestDetail () {
@@ -92,6 +90,94 @@ public class ReportesMB extends BaseMB {
 
     public void setProperties(Properties properties) {
         this.properties = properties;
+    }
+
+    public List<TestDetail> getReportListCypress() {
+        return reportListCypress;
+    }
+
+    public void setReportListCypress(List<TestDetail> reportListCypress) {
+        this.reportListCypress = reportListCypress;
+    }
+
+    public List<TestDetail> getReportListCalabash() {
+        return reportListCalabash;
+    }
+
+    public void setReportListCalabash(List<TestDetail> reportListCalabash) {
+        this.reportListCalabash = reportListCalabash;
+    }
+
+    public List<TestDetail> getReportListGherkin() {
+        return reportListGherkin;
+    }
+
+    public void setReportListGherkin(List<TestDetail> reportListGherkin) {
+        this.reportListGherkin = reportListGherkin;
+    }
+
+    public List<TestDetail> getReportListLightHouse() {
+        return reportListLightHouse;
+    }
+
+    public void setReportListLightHouse(List<TestDetail> reportListLightHouse) {
+        this.reportListLightHouse = reportListLightHouse;
+    }
+
+    public List<TestDetail> getReportListLightPitest() {
+        return reportListLightPitest;
+    }
+
+    public void setReportListLightPitest(List<TestDetail> reportListLightPitest) {
+        this.reportListLightPitest = reportListLightPitest;
+    }
+
+    public List<TestRun> getTestListCypress() {
+        return testListCypress;
+    }
+
+    public void setTestListCypress(List<TestRun> testListCypress) {
+        this.testListCypress = testListCypress;
+    }
+
+    public List<TestRun> getTestListCalabash() {
+        return testListCalabash;
+    }
+
+    public void setTestListCalabash(List<TestRun> testListCalabash) {
+        this.testListCalabash = testListCalabash;
+    }
+
+    public List<TestRun> getTestListGherkin() {
+        return testListGherkin;
+    }
+
+    public void setTestListGherkin(List<TestRun> testListGherkin) {
+        this.testListGherkin = testListGherkin;
+    }
+
+    public List<TestRun> getTestListLightHouse() {
+        return testListLightHouse;
+    }
+
+    public void setTestListLightHouse(List<TestRun> testListLightHouse) {
+        this.testListLightHouse = testListLightHouse;
+    }
+
+    public List<TestRun> getTestListLightPitest() {
+        return testListLightPitest;
+    }
+
+    public void setTestListLightPitest(List<TestRun> testListLightPitest) {
+        this.testListLightPitest = testListLightPitest;
+    }
+
+    public ReportesEJB getReportes() {
+        return reportes;
+    }
+
+    public void setReportes(ReportesEJB reportes) {
+        this.reportes = reportes;
     }
 
 }

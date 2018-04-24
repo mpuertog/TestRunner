@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import java.util.Date;
 import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * The persistent class for the TEST_RUNS database table.
@@ -17,6 +18,7 @@ import java.util.List;
     @NamedQuery(name = "TestRun.findByFramework", query = "SELECT t FROM TestRun t WHERE t.testFramework = :framework ")
 })
 
+@XmlRootElement
 public class TestRun implements Serializable {
 	private static final long serialVersionUID = 1L;
 

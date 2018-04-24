@@ -1,6 +1,5 @@
 package co.edu.uniandes.testrunner.web.business.implementation;
 
-import co.edu.uniandes.testrunner.core.client.TestRunnerClient;
 import javax.ejb.Stateless;
 
 import org.apache.log4j.Logger;
@@ -33,7 +32,6 @@ public class reportesEJBImplementation implements ReportesEJB, Serializable {
                     .getResultList();
         } catch (Exception e) {
             logger.error(e);
-            e.printStackTrace();
         }
         return testList;
     }
@@ -46,19 +44,19 @@ public class reportesEJBImplementation implements ReportesEJB, Serializable {
     @Override
     public List<TestDetail> findByTestRun(List<TestRun> testRunList) {
         List<TestDetail> reportTestList = new ArrayList<>();
-        for (TestRun i : testRunList) {
+        testRunList.stream().forEach((i) -> {
             List<TestDetail> reportsByTestRun;
             try {
                 reportsByTestRun = entityManager.createNamedQuery("TestDetail.findByTestRun")
                         .setParameter("testRun", i)
                         .getResultList();
-                for (TestDetail result : reportsByTestRun) {
+                reportsByTestRun.stream().forEach((result) -> {
                     reportTestList.add(result);
-                }
+                });
             } catch (Exception e) {
                 logger.error(e);
             }
-        }
+        });
         return reportTestList;
     }
 
