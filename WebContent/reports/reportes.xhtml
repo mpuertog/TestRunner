@@ -1,103 +1,115 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                template="../WEB-INF/templates/Layout.xhtml">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../WEB-INF/templates/Layout.xhtml">
 
-    <ui:define name="content">
+	<ui:define name="content">
 
-        <h:form id="reports">
+		<h:form id="reports">
 
-            <p:growl id="msgs" showDetail="true" />
+			<p:growl id="msgs" showDetail="true" />
 
-            <h1 style="margin-top: 0">Reportes</h1>
-            <p:tabView>
-                <p:tab title="Cypress">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:graphicImage value="/resources/algaworks/images/cypress.png"
-                                        width="90px" />
+			<h1 style="margin-top: 0">Reportes</h1>
+			<p:tabView>
+				<p:tab title="Cypress">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage value="/resources/algaworks/images/cypress.png"
+							width="90px" />
 
-                        <p:dataTable var="testTable" value="#{reportesMB.cypressList}">
-                            <p:column headerText="Fecha de Ejecución">
-                                <h:outputText value="#{testTable.testDate}" />
-                            </p:column>
+						<p:dataTable var="testTable" value="#{reportesMB.cypressList}">
+							<p:column headerText="Fecha de Ejecución">
+								<h:outputText value="#{testTable.testDate}" />
+							</p:column>
 
-                            <p:column headerText="Tipo de Test">
-                                <h:outputText value="#{testTable.testType}" />
-                            </p:column>
+							<p:column headerText="Tipo de Test">
+								<h:outputText value="#{testTable.testType}" />
+							</p:column>
 
-                            <p:column headerText="Framework">
-                                <h:outputText value="#{testTable.testFramework}" />
-                            </p:column>
-                        </p:dataTable>
+							<p:column headerText="Framework">
+								<h:outputText value="#{testTable.testFramework}" />
+							</p:column>
+						</p:dataTable>
 
-                    </h:panelGrid>
-                </p:tab>
-                <p:tab title="Calabash">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:graphicImage value="/resources/algaworks/images/calabash.png"
-                                        width="90px" />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="Calabash">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage value="/resources/algaworks/images/calabash.png"
+							width="90px" />
 
-                        <p:dataTable var="testTable" value="#{reportesMB.calabashList}">
-                            <p:column headerText="Fecha de Ejecución">
-                                <h:outputText value="#{testTable.testDate}" />
-                            </p:column>
+						<p:dataTable var="testTable" value="#{reportesMB.calabashList}">
+							<p:column headerText="Fecha de Ejecución">
+								<h:outputText value="#{testTable.testDate}" />
+							</p:column>
 
-                            <p:column headerText="Tipo de Test">
-                                <h:outputText value="#{testTable.testType}" />
-                            </p:column>
+							<p:column headerText="Tipo de Test">
+								<h:outputText value="#{testTable.testType}" />
+							</p:column>
 
-                            <p:column headerText="Framework">
-                                <h:outputText value="#{testTable.testFramework}" />
-                            </p:column>
-                        </p:dataTable>
+							<p:column headerText="Framework">
+								<h:outputText value="#{testTable.testFramework}" />
+							</p:column>
+						</p:dataTable>
 
-                    </h:panelGrid>
-                </p:tab>
-                <p:tab title="Google Lighthouse">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:graphicImage
-                            value="/resources/algaworks/images/pwa-lighthouse.png"
-                            width="90px" />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="Google Lighthouse">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage
+							value="/resources/algaworks/images/pwa-lighthouse.png"
+							width="90px" />
 
-                        <p:dataTable var="testTable" value="#{reportesMB.lighthouseList}">
-                            <p:column headerText="Fecha de Ejecución">
-                                <h:outputText value="#{testTable.testDate}" />
-                            </p:column>
+						<p:dataTable var="testRun" value="#{reportesMB.lighthouseList}"
+							rowKey="#{testRun.id}" selection="#{reportesMB.selectedTestRun}"
+							selectionMode="single">
+							<f:facet name="header">Seleccione un reporte para descargar</f:facet>
+							<p:column headerText="Fecha de Ejecución">
+								<h:outputText value="#{testRun.testDate}" />
+							</p:column>
 
-                            <p:column headerText="Tipo de Test">
-                                <h:outputText value="#{testTable.testType}" />
-                            </p:column>
+							<p:column headerText="Tipo de Test">
+								<h:outputText value="#{testRun.testType}" />
+							</p:column>
 
-                            <p:column headerText="Framework">
-                                <h:outputText value="#{testTable.testFramework}" />
-                            </p:column>
-                        </p:dataTable>
-                    </h:panelGrid>
-                </p:tab>
-                <p:tab title="Pitest">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:graphicImage
-                            value="/resources/algaworks/images/pitest.png"
-                            width="90px" />
+							<p:column headerText="Framework">
+								<h:outputText value="#{testRun.testFramework}" />
+							</p:column>
 
-                        <p:dataTable var="testTable" value="#{reportesMB.pitestList}">
-                            <p:column headerText="Fecha de Ejecución">
-                                <h:outputText value="#{testTable.testDate}" />
-                            </p:column>
+							<f:facet name="footer">
+								<h:form>
+									<h:commandButton
+										actionListener="#{reportesMB.downloadLighthouseReport()}"
+										value="Descargar reporte seleccionado"
+										onclick="this.form.target='_blank'" />
+								</h:form>
+							</f:facet>
+						</p:dataTable>
 
-                            <p:column headerText="Tipo de Test">
-                                <h:outputText value="#{testTable.testType}" />
-                            </p:column>
+					</h:panelGrid>
+				</p:tab>
+				<p:tab title="Pitest">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage value="/resources/algaworks/images/pitest.png"
+							width="90px" />
 
-                            <p:column headerText="Framework">
-                                <h:outputText value="#{testTable.testFramework}" />
-                            </p:column>
-                        </p:dataTable>
-                    </h:panelGrid>
-                </p:tab>
-            </p:tabView>
-        </h:form>
-    </ui:define>
+						<p:dataTable var="testTable" value="#{reportesMB.pitestList}">
+							<p:column headerText="Fecha de Ejecución">
+								<h:outputText value="#{testTable.testDate}" />
+							</p:column>
+
+							<p:column headerText="Tipo de Test">
+								<h:outputText value="#{testTable.testType}" />
+							</p:column>
+
+							<p:column headerText="Framework">
+								<h:outputText value="#{testTable.testFramework}" />
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
 </ui:composition>

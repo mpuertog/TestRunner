@@ -1,4 +1,4 @@
-describe('Los URL under monkeys', function() {
+describe('Random testing URL under monkeys', function() {
     it('visits URL and survives monkeys', function() {
         cy.visit('URL');
         cy.wait(500);

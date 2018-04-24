@@ -29,7 +29,7 @@ public class ReportsDAOImplementation implements ReportsDAO {
 
 	@Override
 	public TestRun findTestRun(TestRun testRun) {
-		return em.find(TestRun.class, testRun);
+		return em.find(TestRun.class, testRun.getId());
 	}
 
 }
