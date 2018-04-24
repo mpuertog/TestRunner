@@ -20,6 +20,7 @@ public class ReportesMB extends BaseMB {
 	private List<TestRun> cypressList = new ArrayList<TestRun>();
 	private List<TestRun> lighthouseList = new ArrayList<TestRun>();
 	private List<TestRun> calabashList = new ArrayList<TestRun>();
+        private List<TestRun> pitestList = new ArrayList<TestRun>();
 
 	@EJB
 	private ReportEJB reportEJB;
@@ -33,6 +34,7 @@ public class ReportesMB extends BaseMB {
 		cypressList = reportEJB.findByFramework(WebConstants.CYPRESS);
 		lighthouseList = reportEJB.findByFramework(WebConstants.LIGHTHOUSE);
 		calabashList = reportEJB.findByFramework(WebConstants.CALABASH);
+                pitestList = reportEJB.findByFramework(WebConstants.PITEST);
 	}
 
 	public String getReporteLink() {
@@ -74,5 +76,13 @@ public class ReportesMB extends BaseMB {
 	public void setReportEJB(ReportEJB reportEJB) {
 		this.reportEJB = reportEJB;
 	}
+
+    public List<TestRun> getPitestList() {
+        return pitestList;
+    }
+
+    public void setPitestList(List<TestRun> pitestList) {
+        this.pitestList = pitestList;
+    }
 
 }
