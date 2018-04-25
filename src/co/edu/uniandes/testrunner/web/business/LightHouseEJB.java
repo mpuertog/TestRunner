@@ -9,7 +9,7 @@ public interface LightHouseEJB {
 
 	public void saveLighthouseTest(TestRun testRun, String outputFile);
 
-	public void saveCypressRandomTest(TestRun testRun, String outputFileS);
+	public void saveCypressRandomTest(TestRun testRun, String outputFiles);
 
 	public void savePitestTest(TestRun testRun, String outputFileS);
 

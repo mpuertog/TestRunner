@@ -14,7 +14,8 @@ public class WebConstants {
 	public static final String LIGHTHOUSE = "Lighthouse";
 	public static final String LIGHTHOUSE_BASE = "lighthouse --output json --chrome-flags=\"--headless\" --output-path=%s ";
 	public static final String LIGHTHOUSE_FINISHED = "Análisis de PWA terminado sobre: ";
-	public static final String LIGHTHOUSE_TYPE = "Progresivas";
+	public static final String LIGHTHOUSE_TYPE = "Análisis PWA";
+	public static final String LIGHTHOUSE_SCORES = "Calificaciones PWA";
 
 	public static final String CYPRESS = "Cypress";
 	public static final String CYPRESS_RUN = "./node_modules/.bin/cypress run -P %s";

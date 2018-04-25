@@ -94,11 +94,10 @@ public class ReportesMB extends BaseMB {
 		ChartSeries scores = new ChartSeries();
 		Loader loader = new LightHouseJsonLoader();
 		LighthousePOJO pojo = (LighthousePOJO) loader.loadFromString(fileContent);
-		scores.setLabel("Calificaciones PWA");
 		for (LighthouseReportCategoryPOJO category : pojo.getCategories()) {
 			scores.set(category.getCategoryName(), category.getCategoryScore());
-			System.out.println(category.getCategoryName() + "-" + category.getCategoryScore());
 		}
+		scores.setLabel(WebConstants.LIGHTHOUSE_SCORES);
 		model.setTitle(pojo.getInitialUrl());
 		model.addSeries(scores);
 		this.barModel = model;
