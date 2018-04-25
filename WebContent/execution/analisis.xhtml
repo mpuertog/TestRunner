@@ -6,7 +6,7 @@
 	template="../WEB-INF/templates/Layout.xhtml">
 
 	<ui:define name="content">
-		<h1 class="aw-page-title">Analisis sobre el set de pruebas de aplicación</h1>
+		<h1 class="aw-page-title">Analisis del set de pruebas</h1>
 
 		<p:ajaxStatus onstart="PF('statusDialog').show()"
 			onsuccess="PF('statusDialog').hide()" />
@@ -18,43 +18,25 @@
 			<p:outputLabel value="Procesando..." />
 		</p:dialog>
 
-		<h:form id="sourceForm">
-			<p:fieldset legend="PWA" toggleable="true" toggleSpeed="500">
-				<h:panelGrid columns="2" cellpadding="5">
-					<h:graphicImage
-						value="/resources/algaworks/images/pwa-lighthouse.png" width="80" />
-					<h:outputText
-						value="Evaluación  de características de PWA (Progressive Web App) utilizando la herramienta Google Lighthouse."></h:outputText>
-					<h:outputText value="Ingrese la URL a analizar: " style="width:85%" />
-					<p:inputText id="lighthouseInput" value="#{webMB.lighthouseURL}"
-						size="50" maxlength="1000" required="true"
-						requiredMessage="Debe ingresar una URL para la evaluación de PWA">
-						<p:watermark for="lighthouseInput" value="http://www.example.com" />
-					</p:inputText>
-					<p:commandButton value="Ejecutar" update="layoutForm:messages"
-						actionListener="#{webMB.lighthouseTest()}" partialSubmit="true"
-						process="sourceForm" async="true" />
-				</h:panelGrid>
-			</p:fieldset>
-		</h:form>
-
-		<h:form id="randomForm">
-			<p:fieldset legend="Random Testing" toggleable="true"
+		<h:form id="mutantForm">
+			<p:fieldset legend="Mutation Testing" toggleable="true"
 				toggleSpeed="500">
 				<h:panelGrid columns="2" cellpadding="5">
-					<h:graphicImage value="/resources/algaworks/images/cypress.png"
+					<h:graphicImage value="/resources/algaworks/images/pitest.png"
 						width="100" />
 					<h:outputText
-						value="Ejecución de pruebas aleatorias utilizando la plataforma Cypress."></h:outputText>
-					<h:outputText value="Ingrese la URL a analizar: " style="width:85%" />
-					<p:inputText id="cypressInput" value="#{webMB.cypressURL}"
+						value="Generacion de mutantes y ejecucion de pruebas unitarias utilizando la herramienta Pitest."></h:outputText>
+					<h:outputText
+						value="Seleccione el directorio del proyecto a analizar: "
+						style="width:85%" />
+					<p:inputText id="ptestInput" value="#{webMB.pitestFolder}"
 						size="50" maxlength="1000" required="true"
-						requiredMessage="Debe ingresar una URL para ejecutar Random Testing">
-						<p:watermark for="cypressInput" value="http://www.example.com" />
+						requiredMessage="Debe seleccionar el directorio del proyecto para Mutation Testing">
+						<p:watermark for="ptestInput" value="C:User/dir_example/proyect" />
 					</p:inputText>
-					<p:commandButton value="Evaluar..." update="layoutForm:messages"
-						actionListener="#{webMB.cypressRandomTest()}" partialSubmit="true"
-						process="randomForm" async="true" />
+					<p:commandButton value="Ejecutar..." update="layoutForm:messages"
+						actionListener="#{webMB.pitest()}" partialSubmit="true"
+						process="mutantForm" async="true" />
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
