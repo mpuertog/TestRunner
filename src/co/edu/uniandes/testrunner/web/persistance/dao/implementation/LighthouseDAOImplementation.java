@@ -23,4 +23,9 @@ public class LighthouseDAOImplementation implements LighthouseDAO {
 		em.persist(testRun);
 	}
 
+	@Override
+	public void savePitestTest(TestRun testRun) {
+		em.persist(testRun);
+	}
+
 }

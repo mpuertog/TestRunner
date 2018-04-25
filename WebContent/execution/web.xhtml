@@ -59,8 +59,8 @@
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
-                
-                <h:form id="mutantForm">
+
+		<h:form id="mutantForm">
 			<p:fieldset legend="Mutation Testing" toggleable="true"
 				toggleSpeed="500">
 				<h:panelGrid columns="2" cellpadding="5">
@@ -68,15 +68,17 @@
 						width="100" />
 					<h:outputText
 						value="Generacion de mutantes y ejecucion de pruebas unitarias utilizando la herramienta Pitest."></h:outputText>
-					<h:outputText value="Seleccione el directorio del proyecto a analizar: " style="width:85%" />
-					<p:inputText id="ptestInput" value="#"
+					<h:outputText
+						value="Seleccione el directorio del proyecto a analizar: "
+						style="width:85%" />
+					<p:inputText id="ptestInput" value="#{webMB.pitestFolder}"
 						size="50" maxlength="1000" required="true"
 						requiredMessage="Debe seleccionar el directorio del proyecto para Mutation Testing">
-						<p:watermark for="ptestInput" value="C:User/dir_example/proyect"/>
+						<p:watermark for="ptestInput" value="C:User/dir_example/proyect" />
 					</p:inputText>
 					<p:commandButton value="Ejecutar..." update="layoutForm:messages"
-						actionListener="#" partialSubmit="true"
-						process="randomForm" async="true"/>
+						actionListener="#{webMB.pitest()}" partialSubmit="true"
+						process="mutantForm" async="true" />
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>

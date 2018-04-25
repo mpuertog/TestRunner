@@ -42,6 +42,14 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 
 	}
 
+	@Override
+	public void savePitestTest(TestRun testRun, String ouutputFile) {
+		TestDetail testDetail = new TestDetail();
+		testDetail.setFileName(ouutputFile);
+		testRun.setTestDetails(Arrays.asList(testDetail));
+		lightHouseDAO.savePitestTest(testRun);
+	}
+
 	private String getBase64CypressJSON(String filePath) {
 		String originalInput = null;
 		try {
