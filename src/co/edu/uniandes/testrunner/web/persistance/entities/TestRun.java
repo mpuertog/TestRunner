@@ -1,10 +1,21 @@
 package co.edu.uniandes.testrunner.web.persistance.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,9 +47,6 @@ public class TestRun implements Serializable {
 
 	@Column(name = "TEST_FRAMEWORK")
 	private String testFramework;
-
-	@Transient
-	private String downloadLink;
 
 	// bi-directional many-to-one association to TestDetail
 	@OneToMany(mappedBy = "testRun", cascade = CascadeType.ALL)
@@ -105,14 +113,6 @@ public class TestRun implements Serializable {
 
 	public void setTestFramework(String testFramework) {
 		this.testFramework = testFramework;
-	}
-
-	public String getDownloadLink() {
-		return downloadLink;
-	}
-
-	public void setDownloadLink(String downloadLink) {
-		this.downloadLink = downloadLink;
 	}
 
 }

@@ -61,4 +61,38 @@ public class CalabashJsonLoader extends Loader {
 		return pojo;
 	}
 
+	@Override
+	public POJO loadFromString(String fileContent) {
+		pojo = new CalabashAndroidPOJO();
+		try {
+			JSONObject jsonObject = new JSONObject(fileContent);
+			JSONArray jsonArray = jsonObject.getJSONArray(CalabashJsonKeys.ELEMENTS);
+
+			List<Object> jsonArrayList = jsonArray.toList();
+			List<CalabashAndroidStepPOJO> pojoStepList = new ArrayList<CalabashAndroidStepPOJO>();
+
+			HashMap testElements = (HashMap) jsonArrayList.get(CalabashJsonKeys.ELEMENTS_INDEX);
+
+			ArrayList stepsList = (ArrayList) testElements.get(CalabashJsonKeys.STEPS);
+
+			for (Object step : stepsList) {
+				HashMap stepMap = (HashMap) step;
+				HashMap stepResults = (HashMap) stepMap.get(CalabashJsonKeys.RESULT);
+				CalabashAndroidStepPOJO stepPojo = new CalabashAndroidStepPOJO();
+				stepPojo.setKeyword(stepMap.get(CalabashJsonKeys.KEYWORD).toString());
+				stepPojo.setName(stepMap.get(CalabashJsonKeys.NAME).toString());
+				stepPojo.setResult(stepResults.get(CalabashJsonKeys.STATUS).toString());
+				pojoStepList.add(stepPojo);
+			}
+
+			pojo.setFeatureName(jsonObject.get(CalabashJsonKeys.NAME).toString());
+			pojo.setScenario(testElements.get(CalabashJsonKeys.NAME).toString());
+			pojo.setStepsList(pojoStepList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pojo;
+	}
+
 }

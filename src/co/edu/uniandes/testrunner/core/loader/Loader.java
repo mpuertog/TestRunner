@@ -20,6 +20,8 @@ public abstract class Loader {
 
 	public abstract POJO loadFromFile(String fileName);
 
+	public abstract POJO loadFromString(String fileContent);
+
 	public static String readFile(String file) throws IOException {
 		return FileUtils.readFileToString(new File(file.trim()), "UTF-8");
 	}

@@ -15,6 +15,16 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
+
+import co.edu.uniandes.testrunner.core.loader.Loader;
+import co.edu.uniandes.testrunner.core.loader.json.LightHouseJsonLoader;
+import co.edu.uniandes.testrunner.core.loader.pojo.LighthousePOJO;
+import co.edu.uniandes.testrunner.core.loader.pojo.LighthouseReportCategoryPOJO;
+import co.edu.uniandes.testrunner.core.util.FilesConstants;
 import co.edu.uniandes.testrunner.web.business.ReportEJB;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestDetail;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
@@ -30,7 +40,9 @@ public class ReportesMB extends BaseMB {
 	private List<TestRun> calabashList = new ArrayList<TestRun>();
 	private List<TestRun> pitestList = new ArrayList<TestRun>();
 
-	private TestRun selectedTestRun;
+	private StreamedContent lighthouseDownload;
+
+	private BarChartModel barModel = new BarChartModel();
 
 	@EJB
 	private ReportEJB reportEJB;
@@ -47,19 +59,15 @@ public class ReportesMB extends BaseMB {
 		pitestList = reportEJB.findByFramework(WebConstants.PITEST);
 	}
 
-	public void downloadLighthouseReport() throws IOException {
-
-		if (selectedTestRun == null)
-			return;
-
+	public void downloadLighthouseReport(TestRun testRun) throws IOException {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
 
 		response.reset();
-		response.setHeader("Content-Type", "application/json");
+		response.setHeader(WebConstants.CONTENT_TYPE, WebConstants.MIME_JSON);
 
 		OutputStream responseOutputStream = response.getOutputStream();
-		TestDetail testDetail = reportEJB.findByTestRun(selectedTestRun).getTestDetails().get(0);
+		TestDetail testDetail = reportEJB.findByTestRun(testRun).getTestDetails().get(0);
 		byte[] valueEncoded = (testDetail.getFileContent().getBytes());
 		InputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(valueEncoded));
 
@@ -72,9 +80,28 @@ public class ReportesMB extends BaseMB {
 		responseOutputStream.flush();
 		inputStream.close();
 		responseOutputStream.close();
-
 		facesContext.responseComplete();
 
+		this.lighthouseDownload = new DefaultStreamedContent(inputStream, WebConstants.MIME_JSON,
+				FilesConstants.LIGHTHOUSE_FILENAME);
+	}
+
+	public void initPWAScoreChart(TestRun testRun) {
+		TestDetail testDetail = reportEJB.findByTestRun(testRun).getTestDetails().get(0);
+		byte[] valueEncoded = (testDetail.getFileContent().getBytes());
+		String fileContent = new String(Base64.getDecoder().decode(valueEncoded));
+		BarChartModel model = new BarChartModel();
+		ChartSeries scores = new ChartSeries();
+		Loader loader = new LightHouseJsonLoader();
+		LighthousePOJO pojo = (LighthousePOJO) loader.loadFromString(fileContent);
+		scores.setLabel("Calificaciones PWA");
+		for (LighthouseReportCategoryPOJO category : pojo.getCategories()) {
+			scores.set(category.getCategoryName(), category.getCategoryScore());
+			System.out.println(category.getCategoryName() + "-" + category.getCategoryScore());
+		}
+		model.setTitle(pojo.getInitialUrl());
+		model.addSeries(scores);
+		this.barModel = model;
 	}
 
 	public String getReporteLink() {
@@ -125,12 +152,20 @@ public class ReportesMB extends BaseMB {
 		this.pitestList = pitestList;
 	}
 
-	public TestRun getSelectedTestRun() {
-		return selectedTestRun;
+	public StreamedContent getLighthouseDownload() {
+		return lighthouseDownload;
 	}
 
-	public void setSelectedTestRun(TestRun selectedTestRun) {
-		this.selectedTestRun = selectedTestRun;
+	public void setLighthouseDownload(StreamedContent lighthouseDownload) {
+		this.lighthouseDownload = lighthouseDownload;
+	}
+
+	public BarChartModel getBarModel() {
+		return barModel;
+	}
+
+	public void setBarModel(BarChartModel barModel) {
+		this.barModel = barModel;
 	}
 
 }

@@ -20,8 +20,11 @@ public class WebConstants {
 	public static final String CYPRESS_RUN = "./node_modules/.bin/cypress run -P %s";
 	public static final String CYPRESS_MONEY_SCRIPT = "/cypress/integration/monkey.js";
 	public static final String CYPRESS_TYPE = "End to End";
-	public static final String CYPRESS_FINISHED = "Test End to End finalizado sobre: ";        
+	public static final String CYPRESS_FINISHED = "Test End to End finalizado sobre: ";
 	public static final String CALABASH = "Calabash";
 	public static final String PITEST = "Pitest";
+
+	public static final String CONTENT_TYPE = "Content-Type";
+	public static final String MIME_JSON = "application/json";
 
 }

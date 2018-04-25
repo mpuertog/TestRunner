@@ -62,9 +62,8 @@
 							width="90px" />
 
 						<p:dataTable var="testRun" value="#{reportesMB.lighthouseList}"
-							rowKey="#{testRun.id}" selection="#{reportesMB.selectedTestRun}"
-							selectionMode="single">
-							<f:facet name="header">Seleccione un reporte para descargar</f:facet>
+							rowKey="#{testRun.id}">
+
 							<p:column headerText="Fecha de Ejecución">
 								<h:outputText value="#{testRun.testDate}" />
 							</p:column>
@@ -77,18 +76,28 @@
 								<h:outputText value="#{testRun.testFramework}" />
 							</p:column>
 
-							<f:facet name="footer">
-								<h:form>
-									<h:commandButton
-										actionListener="#{reportesMB.downloadLighthouseReport()}"
-										value="Descargar reporte seleccionado"
-										onclick="this.form.target='_blank'" />
-								</h:form>
-							</f:facet>
+							<p:column headerText="Calificación PWA">
+								<p:commandButton icon="fa fa-search" id="lighthouseDlgBtn"
+									oncomplete="PF('pwaDlg').show();" update="pwaDialog"
+									action="#{reportesMB.initPWAScoreChart(testRun)}" />
+								<p:commandButton onclick="this.form.target='_blank'"
+									id="lighthouseDownloadBtn" icon="fa fa-save" ajax="false"
+									action="#{reportesMB.downloadLighthouseReport(testRun)}">
+									<p:fileDownload value="#{reportesMB.lighthouseDownload}" />
+								</p:commandButton>
+								<p:tooltip id="lighthouseDlgBtnTool" for="lighthouseDlgBtn"
+									value="Ver Calificación PWA" />
+								<p:tooltip id="lighthouseDownloadBtnTool"
+									for="lighthouseDownloadBtn"
+									value="Descargar Reporte
+									 PWA" />
+							</p:column>
+
 						</p:dataTable>
 
 					</h:panelGrid>
 				</p:tab>
+
 				<p:tab title="Pitest">
 					<h:panelGrid columns="2" cellpadding="10">
 						<p:graphicImage value="/resources/algaworks/images/pitest.png"
@@ -107,9 +116,24 @@
 								<h:outputText value="#{testTable.testFramework}" />
 							</p:column>
 						</p:dataTable>
+
 					</h:panelGrid>
 				</p:tab>
 			</p:tabView>
 		</h:form>
+
+		<!-- Dialogo de calificación PWA -->
+		<p:dialog header="Calificación PWA" widgetVar="pwaDlg" modal="true"
+			height="320" width="800" resizable="false" draggable="true"
+			id="pwaDialog">
+			<p:panel id="basic" style="margin-bottom:10px">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:chart type="bar" model="#{reportesMB.barModel}"
+						style="height:200px;width:700px" />
+				</h:panelGrid>
+			</p:panel>
+		</p:dialog>
+
+
 	</ui:define>
 </ui:composition>
