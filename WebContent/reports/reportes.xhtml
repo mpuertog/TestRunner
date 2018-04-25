@@ -115,6 +115,10 @@
 							<p:column headerText="Framework">
 								<h:outputText value="#{testTable.testFramework}" />
 							</p:column>
+
+							<p:column headerText="Descargar">
+								<h:outputText value="#{testTable.testDetails.get(0).fileName}" />
+							</p:column>
 						</p:dataTable>
 
 					</h:panelGrid>

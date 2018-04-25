@@ -23,6 +23,8 @@ public class WebConstants {
 	public static final String CYPRESS_FINISHED = "Test End to End finalizado sobre: ";
 	public static final String CALABASH = "Calabash";
 	public static final String PITEST = "Pitest";
+	public static final String PITEST_RUN = "mvn org.pitest:pitest-maven:mutationCoverage -f '%s'";
+	public static final String PITEST_TYPE = "Mutating";
 
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String MIME_JSON = "application/json";

@@ -10,5 +10,7 @@ public interface LighthouseDAO {
 	public void saveLighthouseTest(TestRun testRun);
 	
 	public void saveCypressRandomTest(TestRun testRun);
+	
+	public void savePitestTest(TestRun testRun);
 
 }

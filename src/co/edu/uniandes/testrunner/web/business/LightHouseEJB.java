@@ -11,4 +11,6 @@ public interface LightHouseEJB {
 
 	public void saveCypressRandomTest(TestRun testRun, String outputFileS);
 
+	public void savePitestTest(TestRun testRun, String outputFileS);
+
 }
