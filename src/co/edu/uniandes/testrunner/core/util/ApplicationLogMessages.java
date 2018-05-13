@@ -11,5 +11,6 @@ public class ApplicationLogMessages {
 	public static final String LOG_RUNNING_COMMAND = "Running command: %s";
 	public static final String LOG_COMMAND_COMPLETE = "Command execution completed!";
 	public static final String LOG_COMMAND_ERROR = "There was an error when running the command: ";
+	public static final String LOG_WORKING_DIRECTORY = "Working directory setted at: %s";
 
 }

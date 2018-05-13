@@ -1,6 +1,7 @@
 package co.edu.uniandes.testrunner.core.commandrunner;
 
 import java.io.BufferedReader;
+import java.io.File;
 
 import org.apache.log4j.Logger;
 
@@ -19,6 +20,7 @@ public abstract class CommandRunner {
 	protected Process process;
 	protected BufferedReader reader;
 	protected final static Logger logger = Logger.getRootLogger();
+	protected File workingDirectory;
 
 	/**
 	 * Detecta de forma automática el sistema operativo y selecciona el runner
@@ -40,5 +42,27 @@ public abstract class CommandRunner {
 	 *            {@link String} con el comando a ser enviado al OS
 	 */
 	public abstract void runCommand(String command);
+
+	/**
+	 * Obtiene el objeto {@link File} con la ruta del directorio de trabajo
+	 * 
+	 * @return Ozbjeto {@link File} con la ruta del directorio de trabajo del
+	 *         {@link CommandRunner}
+	 */
+	public File getWorkingDirectory() {
+		return workingDirectory;
+	}
+
+	/**
+	 * Configura el directorio de trabajo por medio de un objeto {@link File} para
+	 * el {@link CommandRunner}
+	 * 
+	 * @param workingDirectory
+	 *            {@link String} que indica la ruta absoluta del directorio de
+	 *            trabajo
+	 */
+	public void setWorkingDirectory(File workingDirectory) {
+		this.workingDirectory = workingDirectory;
+	}
 
 }
