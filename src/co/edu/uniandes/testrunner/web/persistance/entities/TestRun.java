@@ -38,6 +38,9 @@ public class TestRun implements Serializable {
 	@Column(name = "TEST_COMMAND")
 	private String testCommand;
 
+	@Column(name = "TEST_STATUS")
+	private String testStatus = "RUNNING";
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "TEST_DATE")
 	private Date testDate;
@@ -69,6 +72,14 @@ public class TestRun implements Serializable {
 
 	public void setTestCommand(String testCommand) {
 		this.testCommand = testCommand;
+	}
+
+	public String getTestStatus() {
+		return testStatus;
+	}
+
+	public void setTestStatus(String testStatus) {
+		this.testStatus = testStatus;
 	}
 
 	public Date getTestDate() {
