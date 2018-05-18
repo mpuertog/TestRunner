@@ -26,6 +26,10 @@ public class CommandRunnerUbuntu extends CommandRunner {
 			ProcessBuilder processBuilder = new ProcessBuilder(commandList);
 			processBuilder.redirectErrorStream(true);
 			logger.info(String.format(ApplicationLogMessages.LOG_RUNNING_COMMAND, command));
+			if (this.getWorkingDirectory() != null) {
+				processBuilder.directory(this.getWorkingDirectory());
+				logger.info(String.format(ApplicationLogMessages.LOG_WORKING_DIRECTORY, this.getWorkingDirectory()));
+			}
 			process = processBuilder.start();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			while ((s = reader.readLine()) != null) {

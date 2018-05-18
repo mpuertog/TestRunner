@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import co.edu.uniandes.testrunner.core.loader.Loader;
 import co.edu.uniandes.testrunner.core.util.FilesConstants;
 import co.edu.uniandes.testrunner.web.business.LightHouseEJB;
-import co.edu.uniandes.testrunner.web.persistance.dao.LighthouseDAO;
+import co.edu.uniandes.testrunner.web.persistance.dao.TestRunnerDAO;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestDetail;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 
@@ -21,7 +21,7 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 	protected final static Logger logger = Logger.getRootLogger();
 
 	@EJB
-	private LighthouseDAO lightHouseDAO;
+	private TestRunnerDAO lightHouseDAO;
 
 	@Override
 	public void saveLighthouseTest(TestRun testRun, String outputFile) {

@@ -40,3 +40,4 @@ local.properties
 .settings/
 .loadpath
 /nb-configuration.xml
+/lighthouse-results.json
