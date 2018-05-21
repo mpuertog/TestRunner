@@ -11,7 +11,7 @@ public class WebConstants {
 	public static final String GROWL_WARNING = "Advertencia: ";
 	public static final String GROWL_ERROR = "Error: ";
 
-	public static final String RUNNING = "Test en ejecución...";
+	public static final String FINISHED = "FINISHED";
 
 	public static final String LIGHTHOUSE = "Lighthouse";
 	public static final String LIGHTHOUSE_BASE = "lighthouse --output json --chrome-flags=\"--headless\" --output-path=%s ";
@@ -23,7 +23,8 @@ public class WebConstants {
 	public static final String CYPRESS_RUN = "./node_modules/.bin/cypress run -P %s";
 	public static final String CYPRESS_MONEY_SCRIPT = "/cypress/integration/monkey.js";
 	public static final String CYPRESS_MONEY_SCRIPT1 = "/cypress/integration/monkey1.js";
-	public static final String CYPRESS_TYPE = "End to End";
+	public static final String CYPRESS_E2E = "End to End";
+	public static final String CYPRESS_RANDOM = "Cypress Random";
 	public static final String CYPRESS_RUNNING = "Ejecutando Test End to End sobre: ";
 	public static final String CALABASH = "Calabash";
 	public static final String PITEST = "Pitest";

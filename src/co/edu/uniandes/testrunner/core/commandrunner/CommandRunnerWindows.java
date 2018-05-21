@@ -6,8 +6,12 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.ejb.EJB;
+
 import co.edu.uniandes.testrunner.core.util.ApplicationConstants;
 import co.edu.uniandes.testrunner.core.util.ApplicationLogMessages;
+import co.edu.uniandes.testrunner.web.persistance.dao.TestRunnerDAO;
+import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 
 /**
  * Implementación específica del {@link CommandRunner} para Windows
@@ -17,31 +21,54 @@ import co.edu.uniandes.testrunner.core.util.ApplicationLogMessages;
  */
 public class CommandRunnerWindows extends CommandRunner {
 
+	@EJB
+	private TestRunnerDAO testRunnerDAO;
+
 	@Override
 	public void runCommand(String command) {
+		String s = null;
 		try {
 			List<String> commandList = Arrays.asList(ApplicationConstants.POWER_SHELL, command);
 			ProcessBuilder processBuilder = new ProcessBuilder(commandList);
 			processBuilder.redirectErrorStream(true);
 			logger.info(String.format(ApplicationLogMessages.LOG_RUNNING_COMMAND, command));
+			if (this.getWorkingDirectory() != null) {
+				processBuilder.directory(this.getWorkingDirectory());
+				logger.info(String.format(ApplicationLogMessages.LOG_WORKING_DIRECTORY, this.getWorkingDirectory()));
+			}
 			process = processBuilder.start();
-			Thread commandLineThread = new Thread(() -> {
-				try {
-					String s = null;
-					BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-					while ((s = reader.readLine()) != null) {
-						logger.info(s);
-					}
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			});
-			commandLineThread.setDaemon(true);
-			commandLineThread.start();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			while ((s = reader.readLine()) != null) {
+				logger.info(s);
+			}
+			process.waitFor();
 			logger.info(ApplicationLogMessages.LOG_COMMAND_COMPLETE);
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			logger.error(ApplicationLogMessages.LOG_COMMAND_ERROR, e);
 		}
+	}
+
+	@Override
+	public void runCommand(TestRun testRun) {
+		List<String> commandList = Arrays.asList(ApplicationConstants.POWER_SHELL, testRun.getTestCommand());
+		ProcessBuilder processBuilder = new ProcessBuilder(commandList);
+		processBuilder.redirectErrorStream(true);
+		logger.info(String.format(ApplicationLogMessages.LOG_RUNNING_COMMAND, testRun.getTestCommand()));
+		if (this.getWorkingDirectory() != null) {
+			processBuilder.directory(this.getWorkingDirectory());
+			logger.info(String.format(ApplicationLogMessages.LOG_WORKING_DIRECTORY, this.getWorkingDirectory()));
+		}
+		try {
+			process = processBuilder.start();
+			String s = null;
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			while ((s = reader.readLine()) != null) {
+				logger.info(s);
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		logger.info(ApplicationLogMessages.LOG_COMMAND_COMPLETE);
 	}
 
 }

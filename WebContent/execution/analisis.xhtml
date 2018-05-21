@@ -8,16 +8,6 @@
 	<ui:define name="content">
 		<h1 class="aw-page-title">Analisis del set de pruebas</h1>
 
-		<p:ajaxStatus onstart="PF('statusDialog').show()"
-			onsuccess="PF('statusDialog').hide()" />
-
-		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-			closable="false" resizable="false" showHeader="false">
-			<h:graphicImage value="/resources/algaworks/images/loading.gif" />
-			<br />
-			<p:outputLabel value="Procesando..." />
-		</p:dialog>
-
 		<h:form id="mutantForm">
 			<p:fieldset legend="Mutation Testing" toggleable="true"
 				toggleSpeed="500">

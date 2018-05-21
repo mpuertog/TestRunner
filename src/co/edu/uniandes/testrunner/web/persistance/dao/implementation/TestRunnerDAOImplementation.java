@@ -14,9 +14,10 @@ public class TestRunnerDAOImplementation implements TestRunnerDAO {
 	EntityManager em;
 
 	@Override
-	public void updateTest(TestRun testRun) {
+	public TestRun updateTest(TestRun testRun) {
 		em.merge(testRun);
 		em.flush();
+		return testRun;
 	}
 
 	@Override

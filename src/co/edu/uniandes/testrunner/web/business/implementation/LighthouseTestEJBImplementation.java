@@ -33,6 +33,9 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 	@EJB
 	private TestRunnerDAO lightHouseDAO;
 
+	@EJB
+	private TestRunnerDAO testRunnerDAO;
+
 	@Override
 	public void saveLighthouseTest(String command) {
 		StringBuilder sb = new StringBuilder();
@@ -40,9 +43,8 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 		sb.append(FilesConstants.LIGHTHOUSE_PATH);
 		sb.append(FilesConstants.LIGHTHOUSE_FILENAME);
 		String lightHousecommand = String.format(WebConstants.LIGHTHOUSE_BASE, sb.toString()).trim();
-		CommandRunner.getRunner().runCommand(lightHousecommand + ApplicationConstants.WHITE_SPACE + command);
 		TestRun testRun = new TestRun();
-		testRun.setTestCommand(sb.toString());
+		testRun.setTestCommand(lightHousecommand + ApplicationConstants.WHITE_SPACE + command);
 		testRun.setTestDate(new Date());
 		testRun.setTestType(WebConstants.LIGHTHOUSE_TYPE);
 		testRun.setTestFramework(WebConstants.LIGHTHOUSE);
@@ -51,6 +53,16 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 		testDetail.setFileContent(getBase64CypressJSON(sb.toString()));
 		testRun.setTestDetails(Arrays.asList(testDetail));
 		lightHouseDAO.saveLighthouseTest(testRun);
+		Thread commandLineThread = new Thread(() -> {
+			try {
+				CommandRunner.getRunner().runCommand(testRun);
+				testRun.setTestStatus(WebConstants.FINISHED);
+				testRunnerDAO.updateTest(testRun);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		});
+		commandLineThread.start();
 	}
 
 	@Override
@@ -58,41 +70,42 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 		String cypressMonkeyTestPath = properties.getProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH);
 		WildardReplaceUtil wildcardUtil = new WildardReplaceUtil();
 		wildcardUtil.replaceCypressMonkey(cypressMonkeyTestPath + WebConstants.CYPRESS_MONEY_SCRIPT, command);
-		CommandRunner.getRunner()
-				.runCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
 		TestRun testRun = new TestRun();
 		testRun.setTestCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
 		testRun.setTestDate(new Date());
-		testRun.setTestType(WebConstants.CYPRESS_TYPE);
+		testRun.setTestType(WebConstants.CYPRESS_RANDOM);
 		testRun.setTestFramework(WebConstants.CYPRESS);
 		TestDetail testDetail = new TestDetail();
 		testDetail.setFileName(FilesConstants.CYPRESS_FILENAME);
 		testRun.setTestDetails(Arrays.asList(testDetail));
 		lightHouseDAO.saveCypressRandomTest(testRun);
+		Thread commandLineThread = new Thread(() -> {
+			try {
+				CommandRunner.getRunner().runCommand(
+						cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
+				testRun.setTestStatus(WebConstants.FINISHED);
+				testRunnerDAO.updateTest(testRun);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		});
+		commandLineThread.start();
 
 	}
 
 	@Override
 	public void saveCypressE2ETest(String command) {
-	    String cypressMonkeyTestPath = properties.getProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH);
-	    WildardReplaceUtil wildcardUtil = new WildardReplaceUtil();
-	    wildcardUtil.replaceCypressMonkey(cypressMonkeyTestPath + WebConstants.CYPRESS_MONEY_SCRIPT1, command);
-	    CommandRunner.getRunner()
-	            .runCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
-	    TestRun testRun = new TestRun();
-	    testRun.setTestCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
-	    testRun.setTestDate(new Date());
-	    testRun.setTestType(WebConstants.CYPRESS_TYPE);
-	    testRun.setTestFramework(WebConstants.CYPRESS);
-		//lightHouseEJB.saveCypressRandomTest();
-	}
-
-	@Override
-	public void savePitestTest(String command) {
-		TestDetail testDetail = new TestDetail();
-		// testDetail.setFileName(ouutputFile);
-		// testRun.setTestDetails(Arrays.asList(testDetail));
-		// lightHouseDAO.savePitestTest(testRun);
+		String cypressMonkeyTestPath = properties.getProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH);
+		WildardReplaceUtil wildcardUtil = new WildardReplaceUtil();
+		wildcardUtil.replaceCypressMonkey(cypressMonkeyTestPath + WebConstants.CYPRESS_MONEY_SCRIPT1, command);
+		CommandRunner.getRunner()
+				.runCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
+		TestRun testRun = new TestRun();
+		testRun.setTestCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
+		testRun.setTestDate(new Date());
+		testRun.setTestType(WebConstants.CYPRESS_E2E);
+		testRun.setTestFramework(WebConstants.CYPRESS);
+		// lightHouseEJB.saveCypressRandomTest();
 	}
 
 	private String getBase64CypressJSON(String filePath) {

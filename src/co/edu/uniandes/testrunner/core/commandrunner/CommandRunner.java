@@ -6,6 +6,7 @@ import java.io.File;
 import org.apache.log4j.Logger;
 
 import co.edu.uniandes.testrunner.core.util.ApplicationConstants;
+import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 
 /**
  * Clase abstracta que determina el {@link CommandRunner} a utilizar,
@@ -36,12 +37,21 @@ public abstract class CommandRunner {
 
 	/**
 	 * Envía el comando ingresado al sistema operativo, es un método abstracto con
-	 * una implementación distinta para cada{@link CommandRunner} específico
+	 * una implementación distinta para cada {@link CommandRunner} específico
 	 * 
 	 * @param command
 	 *            {@link String} con el comando a ser enviado al OS
 	 */
 	public abstract void runCommand(String command);
+
+	/**
+	 * Implementación web del ejecutor de comandos, se utiliza cuando se desea tener
+	 * control del proceso almacenado en la entidad {@link TestRun}
+	 * 
+	 * @param testRun
+	 *            Entidad {@link TestRun} con la información del test a ejecutar
+	 */
+	public abstract void runCommand(TestRun testRun);
 
 	/**
 	 * Obtiene el objeto {@link File} con la ruta del directorio de trabajo

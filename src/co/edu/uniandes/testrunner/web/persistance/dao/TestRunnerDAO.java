@@ -7,7 +7,7 @@ import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 @Local
 public interface TestRunnerDAO {
 	
-	public void updateTest(TestRun testRun);
+	public TestRun updateTest(TestRun testRun);
 
 	public TestRun saveLighthouseTest(TestRun testRun);
 	
