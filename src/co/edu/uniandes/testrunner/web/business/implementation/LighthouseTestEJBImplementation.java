@@ -121,4 +121,12 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 		return null;
 	}
 
+	@Override
+	public void savePitestTest(TestRun testRun, String ouutputFile) {
+		TestDetail testDetail = new TestDetail();
+		testDetail.setFileName(ouutputFile);
+		testRun.setTestDetails(Arrays.asList(testDetail));
+		lightHouseDAO.savePitestTest(testRun);
+	}
+
 }

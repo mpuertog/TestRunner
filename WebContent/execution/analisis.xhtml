@@ -19,13 +19,13 @@
 					<h:outputText
 						value="Seleccione el directorio del proyecto a analizar: "
 						style="width:85%" />
-					<p:inputText id="ptestInput" value="#{webMB.pitestFolder}"
+					<p:inputText id="ptestInput" value="#{analisisMB.pitestFolder}"
 						size="50" maxlength="1000" required="true"
 						requiredMessage="Debe seleccionar el directorio del proyecto para Mutation Testing">
 						<p:watermark for="ptestInput" value="C:User/dir_example/proyect" />
 					</p:inputText>
 					<p:commandButton value="Ejecutar..." update="layoutForm:messages"
-						actionListener="#{webMB.pitest()}" partialSubmit="true"
+						actionListener="#{analisisMB.pitest()}" partialSubmit="true"
 						process="mutantForm" async="true" />
 				</h:panelGrid>
 			</p:fieldset>
