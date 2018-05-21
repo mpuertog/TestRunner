@@ -19,112 +19,114 @@ import co.edu.uniandes.testrunner.web.transversal.WebConstants;
 @ViewScoped
 public class WebMB extends BaseMB {
 
-    private String lighthouseURL;
+	private String lighthouseURL;
 
-    private String cypressURL;
+	private String cypressURL;
 
-    private String cypressTest;
+	private String cypressTest;
 
-    private String pitestFolder;
+	private String pitestFolder;
 
-    @EJB
-    private LightHouseEJB lightHouseEJB;
+	@EJB
+	private LightHouseEJB lightHouseEJB;
 
-    public void lighthouseTest() {
-        lightHouseEJB.saveLighthouseTest(lighthouseURL);
-        infoMessage(WebConstants.LIGHTHOUSE_RUNNING + lighthouseURL);
-    }
+	public void lighthouseTest() {
+		lightHouseEJB.saveLighthouseTest(lighthouseURL);
+		infoMessage(WebConstants.LIGHTHOUSE_RUNNING + lighthouseURL);
+	}
 
-    public void cypressRandomTest() {
-    	infoMessage(WebConstants.RUNNING);
-       lightHouseEJB.saveCypressRandomTest(cypressURL);
-       infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
-    }
-    
-    public void cypressDinamicTest() {
-    	infoMessage(WebConstants.RUNNING);
-	    infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
-	    //lightHouseEJB.saveCypressRandomTest(testRun, null);
-    }
-    
-    public void pitest() throws Exception {
-        File pom = new File(pitestFolder, "pom.xml");
-        if (!pom.exists()) {
-            warningMessage("Debe suminsitrar un proyecto maven");
-            return;
-        }
+	public void cypressRandomTest() {
+		infoMessage(WebConstants.RUNNING);
+		lightHouseEJB.saveCypressRandomTest(cypressURL);
+		infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
+	}
 
-        boolean junit = FileUtils.readFileToString(pom).replaceAll("\\s+", "").contains("<artifactId>junit</artifactId><version>4.6</version>");
+	public void cypressDinamicTest() {
+		infoMessage(WebConstants.RUNNING);
+		infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
+		// lightHouseEJB.saveCypressRandomTest(testRun, null);
+	}
 
-        if (!junit) {
-            warningMessage("Debe usar JUnit 4.6");
-            return;
-        }
+	public void pitest() throws Exception {
+		File pom = new File(pitestFolder, "pom.xml");
+		if (!pom.exists()) {
+			warningMessage("Debe suminsitrar un proyecto maven");
+			return;
+		}
 
-        boolean pitest = FileUtils.readFileToString(pom).replaceAll("\\s+", "").contains("<plugin><groupId>org.pitest</groupId><artifactId>pitest-maven</artifactId>");
+		boolean junit = FileUtils.readFileToString(pom).replaceAll("\\s+", "")
+				.contains("<artifactId>junit</artifactId><version>4.6</version>");
 
-        if (!pitest) {
-            String plugin = "<plugin>\n<groupId>org.pitest</groupId>\n<artifactId>pitest-maven</artifactId>\n<version>1.3.2</version>\n</plugin>";
-            warningMessage("Debe usar el plugin de Pitest: " + plugin);
-            return;
-        }
+		if (!junit) {
+			warningMessage("Debe usar JUnit 4.6");
+			return;
+		}
 
-        CommandRunner.getRunner().runCommand(String.format(WebConstants.PITEST_RUN, pitestFolder));
+		boolean pitest = FileUtils.readFileToString(pom).replaceAll("\\s+", "")
+				.contains("<plugin><groupId>org.pitest</groupId><artifactId>pitest-maven</artifactId>");
 
-        TestRun testRun = new TestRun();
-        testRun.setTestCommand(String.format(WebConstants.PITEST_RUN, pitestFolder));
-        testRun.setTestDate(new Date());
-        testRun.setTestType(WebConstants.PITEST_TYPE);
-        testRun.setTestFramework(WebConstants.PITEST);
+		if (!pitest) {
+			String plugin = "<plugin>\n<groupId>org.pitest</groupId>\n<artifactId>pitest-maven</artifactId>\n<version>1.3.2</version>\n</plugin>";
+			warningMessage("Debe usar el plugin de Pitest: " + plugin);
+			return;
+		}
 
-        File fl = new File(pitestFolder + File.separator + "target" + File.separator + "pit-reports");
-        File[] files = fl.listFiles(new FileFilter() {
-            public boolean accept(File file) {
-                return file.isDirectory();
-            }
-        });
-        long lastMod = Long.MIN_VALUE;
-        File choice = null;
-        for (File file : files) {
-            if (file.lastModified() > lastMod) {
-                choice = file;
-                lastMod = file.lastModified();
-            }
-        }
+		CommandRunner.getRunner().runCommand(String.format(WebConstants.PITEST_RUN, pitestFolder));
 
-        lightHouseEJB.savePitestTest(choice.getAbsolutePath() + File.separator + "index.html");
-}
+		TestRun testRun = new TestRun();
+		testRun.setTestCommand(String.format(WebConstants.PITEST_RUN, pitestFolder));
+		testRun.setTestDate(new Date());
+		testRun.setTestType(WebConstants.PITEST_TYPE);
+		testRun.setTestFramework(WebConstants.PITEST);
 
-    public String getLighthouseURL() {
-        return lighthouseURL;
-    }
+		File fl = new File(pitestFolder + File.separator + "target" + File.separator + "pit-reports");
+		File[] files = fl.listFiles(new FileFilter() {
+			public boolean accept(File file) {
+				return file.isDirectory();
+			}
+		});
+		long lastMod = Long.MIN_VALUE;
+		File choice = null;
+		for (File file : files) {
+			if (file.lastModified() > lastMod) {
+				choice = file;
+				lastMod = file.lastModified();
+			}
+		}
 
-    public void setLighthouseURL(String lighthouseURL) {
-        this.lighthouseURL = lighthouseURL;
-    }
+		lightHouseEJB.savePitestTest(choice.getAbsolutePath() + File.separator + "index.html");
+	}
 
-    public String getCypressURL() {
-        return cypressURL;
-    }
+	public String getLighthouseURL() {
+		return lighthouseURL;
+	}
 
-    public void setCypressURL(String cypressURL) {
-        this.cypressURL = cypressURL;
-    }
+	public void setLighthouseURL(String lighthouseURL) {
+		this.lighthouseURL = lighthouseURL;
+	}
 
-    public String getPitestFolder() {
-        return pitestFolder;
-    }
+	public String getCypressURL() {
+		return cypressURL;
+	}
 
-    public void setPitestFolder(String pitestFolder) {
-        this.pitestFolder = pitestFolder;
-    }
+	public void setCypressURL(String cypressURL) {
+		this.cypressURL = cypressURL;
+	}
 
-    public String getCypressTest() {
-        return cypressTest;
-    }
+	public String getPitestFolder() {
+		return pitestFolder;
+	}
 
-    public void setCypressTest(String cypressTest) {
-        this.cypressTest = cypressTest;
-    }
+	public void setPitestFolder(String pitestFolder) {
+		this.pitestFolder = pitestFolder;
+	}
+
+	public String getCypressTest() {
+		return cypressTest;
+	}
+
+	public void setCypressTest(String cypressTest) {
+		this.cypressTest = cypressTest;
+	}
 
 }
