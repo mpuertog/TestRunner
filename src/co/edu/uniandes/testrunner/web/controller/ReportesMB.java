@@ -29,12 +29,6 @@ import co.edu.uniandes.testrunner.web.business.ReportEJB;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestDetail;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 import co.edu.uniandes.testrunner.web.transversal.WebConstants;
-import java.awt.Color;
-import java.io.File;
-import javafx.geometry.Pos;
-import javax.imageio.ImageIO;
-import static javax.swing.Spring.height;
-import static javax.swing.Spring.width;
 
 @ManagedBean
 @ViewScoped
