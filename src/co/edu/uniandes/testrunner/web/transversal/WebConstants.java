@@ -11,18 +11,20 @@ public class WebConstants {
 	public static final String GROWL_WARNING = "Advertencia: ";
 	public static final String GROWL_ERROR = "Error: ";
 
+	public static final String RUNNING = "Test en ejecución...";
+
 	public static final String LIGHTHOUSE = "Lighthouse";
 	public static final String LIGHTHOUSE_BASE = "lighthouse --output json --chrome-flags=\"--headless\" --output-path=%s ";
-	public static final String LIGHTHOUSE_FINISHED = "Análisis de PWA terminado sobre: ";
+	public static final String LIGHTHOUSE_RUNNING = "Ejecutando análisis de PWA sobre: ";
 	public static final String LIGHTHOUSE_TYPE = "Análisis PWA";
 	public static final String LIGHTHOUSE_SCORES = "Calificaciones PWA";
 
 	public static final String CYPRESS = "Cypress";
 	public static final String CYPRESS_RUN = "./node_modules/.bin/cypress run -P %s";
 	public static final String CYPRESS_MONEY_SCRIPT = "/cypress/integration/monkey.js";
-        public static final String CYPRESS_MONEY_SCRIPT1 = "/cypress/integration/monkey1.js";
+	public static final String CYPRESS_MONEY_SCRIPT1 = "/cypress/integration/monkey1.js";
 	public static final String CYPRESS_TYPE = "End to End";
-	public static final String CYPRESS_FINISHED = "Test End to End finalizado sobre: ";
+	public static final String CYPRESS_RUNNING = "Ejecutando Test End to End sobre: ";
 	public static final String CALABASH = "Calabash";
 	public static final String PITEST = "Pitest";
 	public static final String PITEST_RUN = "mvn org.pitest:pitest-maven:mutationCoverage -f '%s'";

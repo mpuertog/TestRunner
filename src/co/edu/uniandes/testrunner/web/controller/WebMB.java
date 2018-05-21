@@ -3,22 +3,15 @@ package co.edu.uniandes.testrunner.web.controller;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Date;
-import java.util.Properties;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.io.FileUtils;
 
 import co.edu.uniandes.testrunner.core.commandrunner.CommandRunner;
-import co.edu.uniandes.testrunner.core.util.ApplicationConstants;
-import co.edu.uniandes.testrunner.core.util.FilesConstants;
-import co.edu.uniandes.testrunner.core.util.WildardReplaceUtil;
 import co.edu.uniandes.testrunner.web.business.LightHouseEJB;
-import co.edu.uniandes.testrunner.web.configuration.os.PathConfiguratorPropertyKeys;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 import co.edu.uniandes.testrunner.web.transversal.WebConstants;
 
@@ -34,52 +27,26 @@ public class WebMB extends BaseMB {
 
     private String pitestFolder;
 
-    private Properties properties;
-
-    private TestRun testRun;
-
     @EJB
     private LightHouseEJB lightHouseEJB;
 
-    @PostConstruct
-    public void init() {
-        properties = (Properties) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-                .get(ApplicationConstants.PATH_SESSION_KEY);
-    }
-
     public void lighthouseTest() {
-        String userPath = properties.get(PathConfiguratorPropertyKeys.USER_PROFILE).toString().trim();
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format(WebConstants.LIGHTHOUSE_BASE, userPath).trim());
-        sb.append(FilesConstants.LIGHTHOUSE_PATH);
-        sb.append(FilesConstants.LIGHTHOUSE_FILENAME);
-        sb.append(lighthouseURL);
-        CommandRunner.getRunner().runCommand(sb.toString());
-        infoMessage(WebConstants.LIGHTHOUSE_FINISHED + lighthouseURL);
-        testRun = new TestRun();
-        testRun.setTestCommand(sb.toString());
-        testRun.setTestDate(new Date());
-        testRun.setTestType(WebConstants.LIGHTHOUSE_TYPE);
-        testRun.setTestFramework(WebConstants.LIGHTHOUSE);
-        lightHouseEJB.saveLighthouseTest(testRun,
-                userPath + FilesConstants.LIGHTHOUSE_PATH + FilesConstants.LIGHTHOUSE_FILENAME);
+        lightHouseEJB.saveLighthouseTest(lighthouseURL);
+        infoMessage(WebConstants.LIGHTHOUSE_RUNNING + lighthouseURL);
     }
 
     public void cypressRandomTest() {
-        String cypressMonkeyTestPath = properties.getProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH);
-        WildardReplaceUtil wildcardUtil = new WildardReplaceUtil();
-        wildcardUtil.replaceCypressMonkey(cypressMonkeyTestPath + WebConstants.CYPRESS_MONEY_SCRIPT, cypressURL);
-        CommandRunner.getRunner()
-                .runCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
-        infoMessage(WebConstants.CYPRESS_FINISHED + cypressURL);
-        testRun = new TestRun();
-        testRun.setTestCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
-        testRun.setTestDate(new Date());
-        testRun.setTestType(WebConstants.CYPRESS_TYPE);
-        testRun.setTestFramework(WebConstants.CYPRESS);
-        lightHouseEJB.saveCypressRandomTest(testRun, null);
+    	infoMessage(WebConstants.RUNNING);
+       lightHouseEJB.saveCypressRandomTest(cypressURL);
+       infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
     }
-
+    
+    public void cypressDinamicTest() {
+    	infoMessage(WebConstants.RUNNING);
+	    infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
+	    //lightHouseEJB.saveCypressRandomTest(testRun, null);
+    }
+    
     public void pitest() throws Exception {
         File pom = new File(pitestFolder, "pom.xml");
         if (!pom.exists()) {
@@ -104,7 +71,7 @@ public class WebMB extends BaseMB {
 
         CommandRunner.getRunner().runCommand(String.format(WebConstants.PITEST_RUN, pitestFolder));
 
-        testRun = new TestRun();
+        TestRun testRun = new TestRun();
         testRun.setTestCommand(String.format(WebConstants.PITEST_RUN, pitestFolder));
         testRun.setTestDate(new Date());
         testRun.setTestType(WebConstants.PITEST_TYPE);
@@ -125,23 +92,8 @@ public class WebMB extends BaseMB {
             }
         }
 
-        lightHouseEJB.savePitestTest(testRun, choice.getAbsolutePath() + File.separator + "index.html");
-    }
-    
-        public void cypressDinamicTest() {
-        String cypressMonkeyTestPath = properties.getProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH);
-        WildardReplaceUtil wildcardUtil = new WildardReplaceUtil();
-        wildcardUtil.replaceCypressMonkey(cypressMonkeyTestPath + WebConstants.CYPRESS_MONEY_SCRIPT1, cypressTest);
-        CommandRunner.getRunner()
-                .runCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
-        infoMessage(WebConstants.CYPRESS_FINISHED + cypressURL);
-        testRun = new TestRun();
-        testRun.setTestCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
-        testRun.setTestDate(new Date());
-        testRun.setTestType(WebConstants.CYPRESS_TYPE);
-        testRun.setTestFramework(WebConstants.CYPRESS);
-        lightHouseEJB.saveCypressRandomTest(testRun, null);
-    }
+        lightHouseEJB.savePitestTest(choice.getAbsolutePath() + File.separator + "index.html");
+}
 
     public String getLighthouseURL() {
         return lighthouseURL;

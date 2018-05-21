@@ -7,10 +7,12 @@ import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 @Local
 public interface LightHouseEJB {
 
-	public void saveLighthouseTest(TestRun testRun, String outputFile);
+	public void saveLighthouseTest(String command);
 
-	public void saveCypressRandomTest(TestRun testRun, String outputFiles);
+	public void saveCypressRandomTest(String command);
+	
+	public void saveCypressE2ETest(String command);
 
-	public void savePitestTest(TestRun testRun, String outputFileS);
+	public void savePitestTest(String command);
 
 }
