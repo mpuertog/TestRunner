@@ -30,6 +30,7 @@ public class WebConstants {
 	public static final String PITEST = "Pitest";
 	public static final String PITEST_RUN = "mvn org.pitest:pitest-maven:mutationCoverage -f '%s'";
 	public static final String PITEST_TYPE = "Mutating";
+        public static final String UPLOAD_FILE= "Se cargo con elxito el archivo";
 
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String MIME_JSON = "application/json";
