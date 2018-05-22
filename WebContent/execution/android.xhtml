@@ -8,7 +8,7 @@
 	<ui:define name="content">
 		<h1 class="aw-page-title">Ejecución de Pruebas para Android</h1>
 
-		<h:form id="androidForm">
+		<h:form id="androidForm" enctype="multipart/form-data">
 			<p:fieldset legend="End to End" toggleable="true" toggleSpeed="500">
 				<h:panelGrid columns="2" cellpadding="5">
 					<h:graphicImage value="/resources/algaworks/images/androidLogo.png"
@@ -17,11 +17,10 @@
 						value="Ejecución de pruebas E2E utilizando el framework Calabash-Android"></h:outputText>
 					<h:outputText value="Seleccione el APK a analizar: "
 						style="width:85%" />
-					<p:inputText id="ptestInput" size="50" maxlength="1000"
-						required="true" requiredMessage="Debe seleccionar un APK">
-					</p:inputText>
-					<p:commandButton value="Ejecutar..." update="layoutForm:messages"
-						partialSubmit="true" process="androidForm" async="true" />
+					<p:fileUpload value="#{androidMB.file}" mode="simple"
+						skinSimple="true" />
+					<p:commandButton value="Submit" ajax="false"
+						actionListener="#{androidMB.upload()}" />
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>

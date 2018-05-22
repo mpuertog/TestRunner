@@ -9,10 +9,9 @@
 		<class>co.edu.uniandes.testrunner.web.persistance.entities.TestDetail</class>
 		<class>co.edu.uniandes.testrunner.web.persistance.entities.TestRun</class>
 		<properties>
-			<property
-				name="javax.persistence.schema-generation.database.action"
-				value="drop-and-create" />
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+			<property name="javax.persistence.sql-load-script-source" value="META-INF/sql/load_script.sql" />
+			<property name="eclipselink.logging.level" value="FINE" />
 		</properties>
 	</persistence-unit>
-
 </persistence>
