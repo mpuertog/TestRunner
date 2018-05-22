@@ -19,6 +19,14 @@
 						style="width:85%" />
 					<p:fileUpload value="#{androidMB.file}" mode="simple"
 						skinSimple="true" />
+					<p:outputLabel for="emulator" value="Emulador: " />
+					<p:selectOneMenu id="emulator"
+						value="#{androidMB.selectedEmulatorID}" style="width:125px"
+						onchange="submit()"
+						valueChangeListener="#{androidMB.handleEmulatorChange}">
+						<f:selectItems value="#{androidMB.androidEmulatorList}" var="emu"
+							itemValue="#{emu.id}" />
+					</p:selectOneMenu>
 					<p:commandButton value="Submit" ajax="false"
 						actionListener="#{androidMB.upload()}" />
 				</h:panelGrid>

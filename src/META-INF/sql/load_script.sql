@@ -1,2 +1,2 @@
-INSERT INTO "APP"."ANDROID_EMULATOR" ("ID", "ANDROID_VERSION", "NAME", "OS_CODENAME") VALUES (1, 8, 'Nexus', 'Oreo')
-INSERT INTO "APP"."ANDROID_EMULATOR" ("ID", "ANDROID_VERSION", "NAME", "OS_CODENAME") VALUES (2, 7, 'Pixel', 'Nougat')
+INSERT INTO "APP"."ANDROID_EMULATOR" ("ID", "ANDROID_VERSION", "COMMAND", "NAME", "OS_CODENAME") VALUES (1, 8, 'emulator @Nexus -no-snapshot-load', 'Nexus', 'Oreo')
+INSERT INTO "APP"."ANDROID_EMULATOR" ("ID", "ANDROID_VERSION", "COMMAND", "NAME", "OS_CODENAME") VALUES (2, 7, 'emulator @Pixel -no-snapshot-load', 'Pixel', 'Nougat')

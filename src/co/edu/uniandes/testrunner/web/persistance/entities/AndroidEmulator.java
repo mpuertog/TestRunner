@@ -38,6 +38,9 @@ public class AndroidEmulator implements Serializable {
 	@Column(name = "ANDROID_VERSION")
 	private int Androidversion;
 
+	@Column(name = "COMMAND")
+	private String command;
+
 	public int getId() {
 		return id;
 	}
@@ -68,6 +71,19 @@ public class AndroidEmulator implements Serializable {
 
 	public void setAndroidversion(int androidversion) {
 		Androidversion = androidversion;
+	}
+
+	public String getCommand() {
+		return command;
+	}
+
+	public void setCommand(String command) {
+		this.command = command;
+	}
+
+	@Override
+	public String toString() {
+		return this.name + " - " + this.Androidversion;
 	}
 
 }

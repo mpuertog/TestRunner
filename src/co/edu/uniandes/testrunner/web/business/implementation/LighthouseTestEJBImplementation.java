@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
+import org.primefaces.model.UploadedFile;
 
 import co.edu.uniandes.testrunner.core.commandrunner.CommandRunner;
 import co.edu.uniandes.testrunner.core.loader.Loader;
@@ -22,8 +23,6 @@ import co.edu.uniandes.testrunner.web.persistance.dao.TestRunnerDAO;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestDetail;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 import co.edu.uniandes.testrunner.web.transversal.WebConstants;
-import javafx.scene.shape.Path;
-import org.primefaces.model.UploadedFile;
 
 @Stateless
 public class LighthouseTestEJBImplementation implements LightHouseEJB {
@@ -130,8 +129,9 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 		testRun.setTestDetails(Arrays.asList(testDetail));
 		lightHouseDAO.savePitestTest(testRun);
 	}
-        @Override
-        public void upploadFile(UploadedFile file){ 
-        }
+
+	@Override
+	public void upploadFile(UploadedFile file) {
+	}
 
 }
