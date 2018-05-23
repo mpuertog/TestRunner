@@ -1,7 +1,6 @@
 package co.edu.uniandes.testrunner.web.business.implementation;
 
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Properties;
 
@@ -13,26 +12,24 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.UploadedFile;
 
 import co.edu.uniandes.testrunner.core.commandrunner.CommandRunner;
-import co.edu.uniandes.testrunner.core.loader.Loader;
 import co.edu.uniandes.testrunner.core.util.ApplicationConstants;
 import co.edu.uniandes.testrunner.core.util.FilesConstants;
 import co.edu.uniandes.testrunner.core.util.WildardReplaceUtil;
-import co.edu.uniandes.testrunner.web.business.LightHouseEJB;
+import co.edu.uniandes.testrunner.web.business.TestEJB;
 import co.edu.uniandes.testrunner.web.configuration.os.PathConfiguratorPropertyKeys;
 import co.edu.uniandes.testrunner.web.persistance.dao.TestRunnerDAO;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestDetail;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
+import co.edu.uniandes.testrunner.web.transversal.FileProcessException;
+import co.edu.uniandes.testrunner.web.transversal.FileUtil;
 import co.edu.uniandes.testrunner.web.transversal.WebConstants;
 
 @Stateless
-public class LighthouseTestEJBImplementation implements LightHouseEJB {
+public class TestEJBImplementation implements TestEJB {
 
 	protected final static Logger logger = Logger.getRootLogger();
 	protected final Properties properties = (Properties) FacesContext.getCurrentInstance().getExternalContext()
 			.getSessionMap().get(ApplicationConstants.PATH_SESSION_KEY);
-
-	@EJB
-	private TestRunnerDAO lightHouseDAO;
 
 	@EJB
 	private TestRunnerDAO testRunnerDAO;
@@ -51,9 +48,14 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 		testRun.setTestFramework(WebConstants.LIGHTHOUSE);
 		TestDetail testDetail = new TestDetail();
 		testDetail.setFileName(FilesConstants.LIGHTHOUSE_FILENAME);
-		testDetail.setFileContent(getBase64CypressJSON(sb.toString()));
+		try {
+			testDetail.setFileContent(FileUtil.getBase64FromFile(sb.toString()));
+		} catch (FileProcessException e) {
+			logger.error(e);
+		}
+		testDetail.setTestRun(testRun);
 		testRun.setTestDetails(Arrays.asList(testDetail));
-		lightHouseDAO.saveLighthouseTest(testRun);
+		testRunnerDAO.saveLighthouseTest(testRun);
 		Thread commandLineThread = new Thread(() -> {
 			try {
 				CommandRunner.getRunner().runCommand(testRun);
@@ -78,8 +80,9 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 		testRun.setTestFramework(WebConstants.CYPRESS);
 		TestDetail testDetail = new TestDetail();
 		testDetail.setFileName(FilesConstants.CYPRESS_FILENAME);
+		testDetail.setTestRun(testRun);
 		testRun.setTestDetails(Arrays.asList(testDetail));
-		lightHouseDAO.saveCypressRandomTest(testRun);
+		testRunnerDAO.saveCypressRandomTest(testRun);
 		Thread commandLineThread = new Thread(() -> {
 			try {
 				CommandRunner.getRunner().runCommand(
@@ -87,7 +90,7 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 				testRun.setTestStatus(WebConstants.FINISHED);
 				testRunnerDAO.updateTest(testRun);
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				logger.error(ex);
 			}
 		});
 		commandLineThread.start();
@@ -109,29 +112,17 @@ public class LighthouseTestEJBImplementation implements LightHouseEJB {
 		// lightHouseEJB.saveCypressRandomTest();
 	}
 
-	private String getBase64CypressJSON(String filePath) {
-		String originalInput = null;
-		try {
-			Thread.sleep(2000);
-			originalInput = Loader.readFile(filePath);
-			return Base64.getEncoder().encodeToString(originalInput.getBytes());
-		} catch (Exception e) {
-			logger.error(e);
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	@Override
 	public void savePitestTest(TestRun testRun, String ouutputFile) {
 		TestDetail testDetail = new TestDetail();
 		testDetail.setFileName(ouutputFile);
+		testDetail.setTestRun(testRun);
 		testRun.setTestDetails(Arrays.asList(testDetail));
-		lightHouseDAO.savePitestTest(testRun);
+		testRunnerDAO.savePitestTest(testRun);
 	}
 
 	@Override
-	public void upploadFile(UploadedFile file) {
+	public void uploadFile(UploadedFile file) {
 	}
 
 }

@@ -4,95 +4,88 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import co.edu.uniandes.testrunner.web.business.LightHouseEJB;
-import co.edu.uniandes.testrunner.web.transversal.WebConstants;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
-
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
+
+import co.edu.uniandes.testrunner.web.business.TestEJB;
+import co.edu.uniandes.testrunner.web.transversal.WebConstants;
 
 @ManagedBean
 @ViewScoped
 public class WebMB extends BaseMB {
 
-    private String lighthouseURL;
+	private String lighthouseURL;
 
-    private String cypressURL;
+	private String cypressURL;
 
-    private String cypressTest;
+	private String cypressTest;
 
-    private String pitestFolder;
-    
-    private UploadedFile file;
- 
-    
-    @EJB
-    private LightHouseEJB lightHouseEJB;
+	private String pitestFolder;
 
-    public void lighthouseTest() {
-        lightHouseEJB.saveLighthouseTest(lighthouseURL);
-        infoMessage(WebConstants.LIGHTHOUSE_RUNNING + lighthouseURL);
-    }
+	private UploadedFile file;
 
-    public void cypressRandomTest() {
-        lightHouseEJB.saveCypressRandomTest(cypressURL);
-        infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
-    }
+	@EJB
+	private TestEJB testEJB;
 
-    public void cypressDinamicTest() {
-        infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
-        // lightHouseEJB.saveCypressRandomTest(testRun, null);
-    }
-    
-    public void upload() {
-        if (file != null) {
-            lightHouseEJB.upploadFile(file);
-            infoMessage(WebConstants.UPLOAD_FILE + file.getFileName());
-        }
-    }
+	public void lighthouseTest() {
+		testEJB.saveLighthouseTest(lighthouseURL);
+		infoMessage(WebConstants.LIGHTHOUSE_RUNNING + lighthouseURL);
+	}
 
-    public String getLighthouseURL() {
-        return lighthouseURL;
-    }
+	public void cypressRandomTest() {
+		testEJB.saveCypressRandomTest(cypressURL);
+		infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
+	}
 
-    public void setLighthouseURL(String lighthouseURL) {
-        this.lighthouseURL = lighthouseURL;
-    }
+	public void cypressDinamicTest() {
+		infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
+		// lightHouseEJB.saveCypressRandomTest(testRun, null);
+	}
 
-    public String getCypressURL() {
-        return cypressURL;
-    }
+	public void upload() {
+		if (file != null) {
+			testEJB.uploadFile(file);
+			infoMessage(WebConstants.UPLOAD_FILE + file.getFileName());
+		}
+	}
 
-    public void setCypressURL(String cypressURL) {
-        this.cypressURL = cypressURL;
-    }
+	public String getLighthouseURL() {
+		return lighthouseURL;
+	}
 
-    public String getPitestFolder() {
-        return pitestFolder;
-    }
+	public void setLighthouseURL(String lighthouseURL) {
+		this.lighthouseURL = lighthouseURL;
+	}
 
-    public void setPitestFolder(String pitestFolder) {
-        this.pitestFolder = pitestFolder;
-    }
+	public String getCypressURL() {
+		return cypressURL;
+	}
 
-    public String getCypressTest() {
-        return cypressTest;
-    }
+	public void setCypressURL(String cypressURL) {
+		this.cypressURL = cypressURL;
+	}
 
-    public void setCypressTest(String cypressTest) {
-        this.cypressTest = cypressTest;
-    }
+	public String getPitestFolder() {
+		return pitestFolder;
+	}
 
-    public UploadedFile getFile() {
-        return file;
-    }
+	public void setPitestFolder(String pitestFolder) {
+		this.pitestFolder = pitestFolder;
+	}
 
-    public void setFile(UploadedFile file) {
-        this.file = file;
-    }
-    
-    
+	public String getCypressTest() {
+		return cypressTest;
+	}
+
+	public void setCypressTest(String cypressTest) {
+		this.cypressTest = cypressTest;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
 
 }

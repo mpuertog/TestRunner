@@ -56,12 +56,12 @@
 	}
 }
 
-/* GROWL */
+/* GROWL 
 .ui-growl {
 	position: fixed;
 	top: 60px;
 	right: 100px;
-	width: 600px;
+	width: 300px;
 }
 
 .ui-growl-message {
@@ -69,3 +69,4 @@
 	width: 95%;
 	float: left;
 }
+*/

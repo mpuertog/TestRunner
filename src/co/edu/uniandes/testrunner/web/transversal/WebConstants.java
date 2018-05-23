@@ -11,6 +11,8 @@ public class WebConstants {
 	public static final String GROWL_WARNING = "Advertencia: ";
 	public static final String GROWL_ERROR = "Error: ";
 
+	public static final String FIELDS_INCOMPLETE = "Debe diligenciar todos los campos";
+
 	public static final String FINISHED = "FINISHED";
 
 	public static final String LIGHTHOUSE = "Lighthouse";
@@ -26,11 +28,16 @@ public class WebConstants {
 	public static final String CYPRESS_E2E = "End to End";
 	public static final String CYPRESS_RANDOM = "Cypress Random";
 	public static final String CYPRESS_RUNNING = "Ejecutando Test End to End sobre: ";
+
 	public static final String CALABASH = "Calabash";
+	public static final String CALABASH_E2E = "Android E2E";
+	public static final String CALABASH_RANDOM = "ADM Monkey";
+	public static final String CALABASH_RUNNING = "Ejecutando Test End to End sobre: ";
+
 	public static final String PITEST = "Pitest";
 	public static final String PITEST_RUN = "mvn org.pitest:pitest-maven:mutationCoverage -f '%s'";
 	public static final String PITEST_TYPE = "Mutating";
-        public static final String UPLOAD_FILE= "Se cargo con elxito el archivo";
+	public static final String UPLOAD_FILE = "Se cargó con éxito el archivo";
 
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String MIME_JSON = "application/json";

@@ -6,7 +6,7 @@ import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 import org.primefaces.model.UploadedFile;
 
 @Local
-public interface LightHouseEJB {
+public interface TestEJB {
 
 	public void saveLighthouseTest(String command);
 
@@ -15,7 +15,7 @@ public interface LightHouseEJB {
 	public void saveCypressE2ETest(String command);
 
 	public void savePitestTest(TestRun testRun, String command);
-        
-        public void upploadFile(UploadedFile file);
+
+	public void uploadFile(UploadedFile file);
 
 }

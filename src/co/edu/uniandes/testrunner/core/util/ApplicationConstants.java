@@ -16,6 +16,7 @@ public class ApplicationConstants {
 	public static final String BASH = "bash";
 	public static final String BASH_PARAM = "-c";
 	public static final String URL_WILDCARD = "URL";
+	public static final String SCREENSHOT_WILDCARD = "SCW";
 	public static final String CHANGE_FOLDER = "cd ";
 	public static final String USER_HOME_WINDOWS = "$env:USERPROFILE";
 	public static final String COLON = ": ";

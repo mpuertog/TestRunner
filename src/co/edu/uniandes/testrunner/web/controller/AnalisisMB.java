@@ -11,7 +11,7 @@ import javax.faces.bean.ViewScoped;
 import org.apache.commons.io.FileUtils;
 
 import co.edu.uniandes.testrunner.core.commandrunner.CommandRunner;
-import co.edu.uniandes.testrunner.web.business.LightHouseEJB;
+import co.edu.uniandes.testrunner.web.business.TestEJB;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 import co.edu.uniandes.testrunner.web.transversal.WebConstants;
 
@@ -20,7 +20,7 @@ import co.edu.uniandes.testrunner.web.transversal.WebConstants;
 public class AnalisisMB extends BaseMB {
 
 	@EJB
-	private LightHouseEJB lightHouseEJB;
+	private TestEJB lightHouseEJB;
 
 	private String pitestFolder;
 

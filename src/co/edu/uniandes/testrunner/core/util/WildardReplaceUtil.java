@@ -64,4 +64,51 @@ public class WildardReplaceUtil {
 		}
 	}
 
+	/**
+	 * Reemplaza el Wildcard con la URI recibida como parámetro y escribe en la
+	 * carpeta de destino el archivo correspondiente
+	 * 
+	 * @param configFilePath
+	 *            La URI del archivo de destino
+	 * @param screenshotPath
+	 *            La URI que debe ir dentro del archivo
+	 */
+	public void replaceCalabashConfig(String screenshotPath, String configFilePath) {
+		BufferedReader bufferedReader = null;
+		StringBuilder stringBuilder = new StringBuilder();
+		try {
+			InputStream inStream = FacesContext.getCurrentInstance().getExternalContext()
+					.getResourceAsStream(FilesConstants.CALABASH_CONFIG_SRC);
+			bufferedReader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
+			String line = null;
+			String ls = System.getProperty("line.separator");
+			while ((line = bufferedReader.readLine()) != null) {
+				stringBuilder.append(line);
+				stringBuilder.append(ls);
+			}
+
+			String text = stringBuilder.toString();
+			text = text.replaceAll(ApplicationConstants.SCREENSHOT_WILDCARD, screenshotPath);
+
+			File targetFile = new File(configFilePath);
+			targetFile.delete();
+			targetFile = new File(configFilePath);
+
+			try (PrintWriter out = new PrintWriter(configFilePath)) {
+				out.println(text);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			new Exception(e);
+		} finally {
+			if (bufferedReader != null) {
+				try {
+					bufferedReader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 }

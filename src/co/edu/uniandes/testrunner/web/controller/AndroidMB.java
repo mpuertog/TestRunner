@@ -12,6 +12,8 @@ import org.primefaces.model.UploadedFile;
 
 import co.edu.uniandes.testrunner.web.business.AndroidEJB;
 import co.edu.uniandes.testrunner.web.persistance.entities.AndroidEmulator;
+import co.edu.uniandes.testrunner.web.transversal.FileUtil;
+import co.edu.uniandes.testrunner.web.transversal.WebConstants;
 
 @ManagedBean
 @ViewScoped
@@ -21,6 +23,7 @@ public class AndroidMB extends BaseMB {
 	private List<AndroidEmulator> androidEmulatorList;
 	private int selectedEmulatorID;
 	private UploadedFile file;
+	private String gherkinCode;
 
 	@EJB
 	private AndroidEJB androidEJB;
@@ -30,16 +33,33 @@ public class AndroidMB extends BaseMB {
 		androidEmulatorList = androidEJB.listAllEmulators();
 	}
 
-	public void upload() {
-		if (file != null) {
-			infoMessage(file.getFileName() + " cargado exitosamente");
-			System.out.println("Size=" + file.getSize());
-		}
-	}
-
 	public void handleEmulatorChange(ValueChangeEvent event) {
 		selectedEmulatorID = Integer.parseInt(event.getNewValue().toString());
 		selectedEmulator = androidEJB.findAndroidEmulatorByID(selectedEmulatorID);
+	}
+
+	public void runAndroidE2ETest() {
+		if (!isAndroidFormComplete()) {
+			warningMessage(WebConstants.FIELDS_INCOMPLETE);
+			return;
+		}
+		String encodedGherkinCode = FileUtil.getBase64FromString(gherkinCode);
+		String encodedAPK = FileUtil.getBase64FromString(new String(file.getContents()));
+		androidEJB.runAndroidE2ETest(file.getFileName(), encodedGherkinCode, encodedAPK, selectedEmulator.getCommand());
+		infoMessage(WebConstants.CYPRESS_RUNNING + file.getFileName());
+	}
+
+	private boolean isAndroidFormComplete() {
+		if (file == null || file.getSize() <= 0)
+			return false;
+
+		if (selectedEmulator == null)
+			return false;
+
+		if (gherkinCode == null || gherkinCode.equals(""))
+			return false;
+
+		return true;
 	}
 
 	public UploadedFile getFile() {
@@ -72,6 +92,14 @@ public class AndroidMB extends BaseMB {
 
 	public void setSelectedEmulatorID(int selectedEmulatorID) {
 		this.selectedEmulatorID = selectedEmulatorID;
+	}
+
+	public String getGherkinCode() {
+		return gherkinCode;
+	}
+
+	public void setGherkinCode(String gherkinCode) {
+		this.gherkinCode = gherkinCode;
 	}
 
 }

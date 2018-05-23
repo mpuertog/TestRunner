@@ -41,4 +41,11 @@ public class TestRunnerDAOImplementation implements TestRunnerDAO {
 		return em.find(TestRun.class, testRun.getId());
 	}
 
+	@Override
+	public TestRun saveAndroidE2ETest(TestRun testRun) {
+		em.persist(testRun);
+		em.flush();
+		return em.find(TestRun.class, testRun.getId());
+	}
+
 }
