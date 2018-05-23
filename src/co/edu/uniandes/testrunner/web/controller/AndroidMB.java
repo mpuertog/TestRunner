@@ -21,6 +21,7 @@ public class AndroidMB extends BaseMB {
 	private List<AndroidEmulator> androidEmulatorList;
 	private int selectedEmulatorID;
 	private UploadedFile file;
+	private UploadedFile image;
 
 	@EJB
 	private AndroidEJB androidEJB;
@@ -48,6 +49,14 @@ public class AndroidMB extends BaseMB {
 
 	public void setFile(UploadedFile file) {
 		this.file = file;
+	}
+
+	public UploadedFile getImage() {
+		return image;
+	}
+
+	public void setImage(UploadedFile image) {
+		this.image = image;
 	}
 
 	public AndroidEmulator getSelectedEmulator() {
