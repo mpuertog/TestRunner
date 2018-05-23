@@ -53,4 +53,13 @@ public class WebMB extends BaseMB {
         this.cypressTest = cypressTest;
     }
 
+    public String getCypressURL() {
+        return cypressURL;
+    }
+
+    public void setCypressURL(String cypressURL) {
+        this.cypressURL = cypressURL;
+    }
+    
+
 }
