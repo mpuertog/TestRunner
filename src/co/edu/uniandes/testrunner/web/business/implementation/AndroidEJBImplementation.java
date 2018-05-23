@@ -51,7 +51,7 @@ public class AndroidEJBImplementation implements AndroidEJB {
 		final String emulatorString = emulator;
 
 		TestRun testRun = new TestRun();
-		testRun.setTestCommand("");
+		testRun.setTestCommand("calabash-android run " + apkName);
 		testRun.setTestDate(new Date());
 		testRun.setTestType(emulator);
 		testRun.setTestFramework(WebConstants.CALABASH);
