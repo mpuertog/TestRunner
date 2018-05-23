@@ -39,7 +39,47 @@
 						process=":androidForm" />
 				</h:panelGrid>
 			</p:fieldset>
+			<p:fieldset legend="Visual Regresion" toggleable="true"
+				toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:graphicImage value="/resources/algaworks/images/resemblejs.png"
+						width="100" />
+					<h:outputText
+						value="Ejecución de pruebas de regesión visual usando Resemble JS"></h:outputText>
+					<h:outputText value="Seleccione la imagen a analizar: "
+						style="width:85%" />
+					<p:fileUpload value="#{androidMB.image}" mode="simple"
+						skinSimple="true" />
+					<p:commandButton value="Submit" ajax="false"
+						actionListener="#{androidMB.analizar()}" />
+				</h:panelGrid>
+			</p:fieldset>
 		</h:form>
-
+		<!-- 
+		<html>
+<body>
+	<input type="file" name="pic1" id="imagen1" accept="image/*">
+	<input type="file" name="pic2" id="imagen2" accept="image/*">
+	<button type="button" onclick="comparar()">Comparar</button>
+	<script src="bower_components/resemblejs/resemble.js"></script>
+	<script>
+function comparar(){	
+	var diff = resemble(
+		document.getElementById("imagen1").files[0]).
+		compareTo(document.getElementById("imagen2").files[0]).onComplete(function(data){
+		console.log(data);
+		return data;
+		/*
+		{
+		  misMatchPercentage : 100, // %
+		  isSameDimensions: true, // or false
+		  getImageDataUrl: function(){}
+		}
+		*/
+	})
+};
+</script>
+</body>
+		</html> -->
 	</ui:define>
 </ui:composition>
