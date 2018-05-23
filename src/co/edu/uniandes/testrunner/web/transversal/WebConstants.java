@@ -25,6 +25,7 @@ public class WebConstants {
 	public static final String CYPRESS_MONEY_SCRIPT1 = "/cypress/integration/monkey1.js";
 	public static final String CYPRESS_E2E = "End to End";
 	public static final String CYPRESS_RANDOM = "Cypress Random";
+        public static final String CYPRESS_TEST_FILE = "Cypress Test File";
 	public static final String CYPRESS_RUNNING = "Ejecutando Test End to End sobre: ";
 	public static final String CALABASH = "Calabash";
 	public static final String PITEST = "Pitest";

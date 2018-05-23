@@ -78,14 +78,11 @@
                     <h:outputText
                         value="Pruebas End to End utilizando la plataforma Cypress."></h:outputText>
                     <h:outputText value="Agregue el archivo donde se encuentra el test"
-                                  style="width:85%" />
-                    <p:growl id="messages" showDetail="true" />
+                                  style="width:85%" />                    
                     <p:fileUpload 
                         id="documento"                                                          
                         fileUploadListener="#{webMB.upload}"                        
-                        allowTypes="/(\.|\/)(js)$/"
-                        mode="advanced"
-                        auto="true"/>                    
+                        allowTypes="/(\.|\/)(js)$/"/>                    
                 </h:panelGrid>
             </p:fieldset>
         </h:form>
