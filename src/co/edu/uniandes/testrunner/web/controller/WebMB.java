@@ -2,9 +2,6 @@ package co.edu.uniandes.testrunner.web.controller;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ViewScoped;
-
-import co.edu.uniandes.testrunner.web.business.TestEJB;
-import co.edu.uniandes.testrunner.web.transversal.WebConstants;
 import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 
