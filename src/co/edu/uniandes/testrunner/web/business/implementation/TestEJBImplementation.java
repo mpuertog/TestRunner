@@ -139,7 +139,7 @@ public class TestEJBImplementation implements TestEJB {
 		TestRun testRun = new TestRun();
 		testRun.setTestCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
 		testRun.setTestDate(new Date());
-		testRun.setTestType(WebConstants.CYPRESS_TEST_FILE);
+		testRun.setTestType(WebConstants.CYPRESS_E2E);
 		testRun.setTestFramework(WebConstants.CYPRESS);
 		TestDetail testDetail = new TestDetail();
 		testDetail.setFileName(FilesConstants.CYPRESS_FILENAME);
