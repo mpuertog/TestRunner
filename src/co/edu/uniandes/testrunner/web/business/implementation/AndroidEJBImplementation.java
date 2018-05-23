@@ -21,6 +21,8 @@ import co.edu.uniandes.testrunner.web.persistance.dao.TestRunnerDAO;
 import co.edu.uniandes.testrunner.web.persistance.entities.AndroidEmulator;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestDetail;
 import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
+import co.edu.uniandes.testrunner.web.transversal.FileProcessException;
+import co.edu.uniandes.testrunner.web.transversal.FileUtil;
 import co.edu.uniandes.testrunner.web.transversal.WebConstants;
 
 @Stateless
@@ -71,10 +73,20 @@ public class AndroidEJBImplementation implements AndroidEJB {
 
 		WildardReplaceUtil wildardReplaceUtil = new WildardReplaceUtil();
 		String workFolder = userPath + FilesConstants.CALABASH_PATH;
-		String screenshotsFolder = workFolder + "sreenshots/" + testRun.getId();
+		String screenshotsFolder = workFolder + "sreenshots/" + testRun.getId() + ApplicationConstants.SLASH;
 		String configDestination = workFolder + "config/cucumber.yml";
+		String featuresFolder = workFolder + "features/";
+		String featureFile = featuresFolder + "test.feature";
 		new File(screenshotsFolder).mkdirs();
 		CommandRunner androidRunner = CommandRunner.getRunner();
+
+		androidRunner.runCommand(String.format(FilesConstants.CALABASH_DELETE_FEATURE, featuresFolder));
+		try {
+			FileUtil.writeFileFromBase64(featureFile, gherkinCode);
+		} catch (FileProcessException e) {
+			e.printStackTrace();
+		}
+
 		androidRunner.setWorkingDirectory(new File(workFolder));
 		wildardReplaceUtil.replaceCalabashConfig(screenshotsFolder, configDestination);
 		Thread emulatorThread = new Thread(() -> {
@@ -90,7 +102,8 @@ public class AndroidEJBImplementation implements AndroidEJB {
 		Thread testThread = new Thread(() -> {
 			try {
 				Thread.sleep(25000);
-				androidRunner.runCommand("calabash-android run " + apkName);
+				androidRunner
+						.runCommand("calabash-android run " + apkName + " -p custom --format json --out test.json");
 				androidRunner.runCommand(ApplicationConstants.KILL_EMULATOR);
 			} catch (Exception ex) {
 				ex.printStackTrace();

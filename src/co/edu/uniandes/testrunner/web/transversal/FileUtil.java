@@ -54,6 +54,16 @@ public class FileUtil {
 		return Base64.getEncoder().encodeToString(fileContent.getBytes());
 	}
 
+	/**
+	 * Escribe un archivo dada la ruta a partir de un {@link String} codificado en
+	 * {@link Base64}
+	 * 
+	 * @param filePath
+	 *            Ubicación del archivo a escribir
+	 * @param encodedContent
+	 *            Contenido codificado en {@link Base64} a escribir en el archivo
+	 * @throws FileProcessException
+	 */
 	public static void writeFileFromBase64(String filePath, String encodedContent) throws FileProcessException {
 		String decodedContent = new String(Base64.getDecoder().decode(encodedContent));
 		try {
