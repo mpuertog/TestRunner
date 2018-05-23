@@ -39,77 +39,7 @@
 						process=":androidForm" />
 				</h:panelGrid>
 			</p:fieldset>
-			<p:fieldset legend="Visual Regresion" toggleable="true"
-				toggleSpeed="500">
-				<h:panelGrid columns="2" cellpadding="5">
-					<h:graphicImage value="/resources/algaworks/images/resemblejs.png"
-						width="100" />
-					<h:outputText
-						value="Ejecución de pruebas de regesión visual usando Resemble JS"></h:outputText>
-					<h:outputText value="Imagen base: "
-						style="width:85%" />
-					<h:graphicImage value="/resources/algaworks/images/base_calendula.jpg"
-					width="100" />
-					<h:outputText value="Seleccione la imagen a analizar: "
-						style="width:85%" />
-					<input type="file" name="pic1" id="imagen_input" accept="image/*" />
-					<p:commandButton value="Comparar" ajax="false"
-						type="button"
-						update=":androidForm" 
-						onclick="comparar()"/>
-					<div id="image-diff" class="small-drop-zone">
-						Diferencias aparecen aqui
-					</div>
-				</h:panelGrid>
-			</p:fieldset>
-			
-			<h:outputScript name="/algaworks/javascripts/resemble.js" />
-			<h:outputScript name="/algaworks/javascripts/jquery.js" />
-			<script>
-			function comparar(){
-				resemble(
-						'/TestRunner/resources/algaworks/images/base_calendula.jpg').
-					compareTo(document.getElementById("imagen_input").files[0]).onComplete(function(data){
-					//console.log(data.getImageDataUrl());
-					onComplete(data);
-					/*
-					{
-					  misMatchPercentage : 100, // %
-					  isSameDimensions: true, // or false
-					  getImageDataUrl: function(){}
-					}
-					*/
-				});
-			}
 
-			function onComplete(data){
-				var time = Date.now();
-				var diffImage = new Image();
-				diffImage.src = data.getImageDataUrl();
-
-				$('#image-diff').html(diffImage);
-
-				$(diffImage).click(function(){
-					var w = window.open("about:blank", "_blank");
-					var html = w.document.documentElement;
-					var body = w.document.body;
-
-					html.style.margin = 0;
-					html.style.padding = 0;
-					body.style.margin = 0;
-					body.style.padding = 0;
-
-					var img = w.document.createElement("img");
-					img.src = diffImage.src;
-					img.alt = "image diff";
-					img.style.maxWidth = "100%";
-					img.addEventListener("click", function() {
-						this.style.maxWidth = this.style.maxWidth === "100%" ? "" : "100%";
-					});
-					body.appendChild(img);
-				});
-			}
-			</script>
 		</h:form>
 	</ui:define>
 </ui:composition>
