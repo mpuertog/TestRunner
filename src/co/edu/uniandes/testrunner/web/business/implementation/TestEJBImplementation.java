@@ -1,5 +1,7 @@
 package co.edu.uniandes.testrunner.web.business.implementation;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
@@ -8,7 +10,9 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 import co.edu.uniandes.testrunner.core.commandrunner.CommandRunner;
@@ -23,11 +27,6 @@ import co.edu.uniandes.testrunner.web.persistance.entities.TestRun;
 import co.edu.uniandes.testrunner.web.transversal.FileProcessException;
 import co.edu.uniandes.testrunner.web.transversal.FileUtil;
 import co.edu.uniandes.testrunner.web.transversal.WebConstants;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import org.apache.commons.io.IOUtils;
-import org.primefaces.event.FileUploadEvent;
 
 @Stateless
 public class TestEJBImplementation implements TestEJB {
@@ -127,45 +126,63 @@ public class TestEJBImplementation implements TestEJB {
 	}
 
 	public void uploadFile(FileUploadEvent event) throws IOException {
-        UploadedFile file;
-        String archivo;
-        String ruta;
-        byte[] contenido;
-        file = event.getFile();
-        archivo = file.getFileName();
-        contenido = IOUtils.toByteArray(file.getInputstream());
-        ruta = "C:" + File.separator + "Users" + File.separator +"JUAN CIFUENTES"+ File.separator + "Documents" + File.separator + "NetBeansProjects" + File.separator +"TestRunner" + File.separator +"WebContent" + File.separator +"WEB-INF" + File.separator +"codetemplates" + File.separator +"cypressTest" + File.separator + archivo;        
-        FileOutputStream fos = new FileOutputStream(ruta);
-        fos.write(contenido);
-        fos.close();   
-        saveCypressFileTest(archivo);
-    }
-    
-    public void saveCypressFileTest(String archivo) {
-        String cypressMonkeyTestPath = properties.getProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH);
-        WildardReplaceUtil wildcardUtil = new WildardReplaceUtil();
-        wildcardUtil.runTestCypressByFile(archivo);
-        TestRun testRun = new TestRun();
-        testRun.setTestCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
-        testRun.setTestDate(new Date());
-        testRun.setTestType(WebConstants.CYPRESS_TEST_FILE);
-        testRun.setTestFramework(WebConstants.CYPRESS);
-        TestDetail testDetail = new TestDetail();
-        testDetail.setFileName(FilesConstants.CYPRESS_FILENAME);
-        testRun.setTestDetails(Arrays.asList(testDetail));
-        testRunnerDAO.saveCypressRandomTest(testRun);
-        Thread commandLineThread = new Thread(() -> {
-            try {
-                CommandRunner.getRunner().runCommand(
-                        cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
-                testRun.setTestStatus(WebConstants.FINISHED);
-                testRunnerDAO.updateTest(testRun);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-        commandLineThread.start();
+		String cypressMonkeyTestPath = properties.getProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH);
+		String ruta = properties.get(PathConfiguratorPropertyKeys.USER_PROFILE).toString().trim();
+		ruta = ruta + FilesConstants.CYPRESS_PATH;
+		CommandRunner.getRunner().runCommand(String.format(FilesConstants.CYPRESS_DELETE_JS, ruta));
+		UploadedFile file = event.getFile();
+		String archivo = file.getFileName();
+		byte[] contenido = IOUtils.toByteArray(file.getInputstream());
+		FileOutputStream fos = new FileOutputStream(ruta + archivo);
+		fos.write(contenido);
+		fos.close();
+		TestRun testRun = new TestRun();
+		testRun.setTestCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
+		testRun.setTestDate(new Date());
+		testRun.setTestType(WebConstants.CYPRESS_TEST_FILE);
+		testRun.setTestFramework(WebConstants.CYPRESS);
+		TestDetail testDetail = new TestDetail();
+		testDetail.setFileName(FilesConstants.CYPRESS_FILENAME);
+		testRun.setTestDetails(Arrays.asList(testDetail));
+		testRunnerDAO.saveCypressRandomTest(testRun);
+		Thread commandLineThread = new Thread(() -> {
+			try {
+				CommandRunner.getRunner().runCommand(
+						cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
+				testRun.setTestStatus(WebConstants.FINISHED);
+				testRunnerDAO.updateTest(testRun);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		});
+		commandLineThread.start();
+	}
 
-    }
+	public void saveCypressFileTest(String archivo) {
+		String cypressMonkeyTestPath = properties.getProperty(PathConfiguratorPropertyKeys.CYPRESS_PATH);
+		WildardReplaceUtil wildcardUtil = new WildardReplaceUtil();
+		wildcardUtil.runTestCypressByFile(archivo);
+		TestRun testRun = new TestRun();
+		testRun.setTestCommand(cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
+		testRun.setTestDate(new Date());
+		testRun.setTestType(WebConstants.CYPRESS_TEST_FILE);
+		testRun.setTestFramework(WebConstants.CYPRESS);
+		TestDetail testDetail = new TestDetail();
+		testDetail.setFileName(FilesConstants.CYPRESS_FILENAME);
+		testRun.setTestDetails(Arrays.asList(testDetail));
+		testRunnerDAO.saveCypressRandomTest(testRun);
+		Thread commandLineThread = new Thread(() -> {
+			try {
+				CommandRunner.getRunner().runCommand(
+						cypressMonkeyTestPath + String.format(WebConstants.CYPRESS_RUN, cypressMonkeyTestPath));
+				testRun.setTestStatus(WebConstants.FINISHED);
+				testRunnerDAO.updateTest(testRun);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		});
+		commandLineThread.start();
+
+	}
 
 }
