@@ -18,11 +18,11 @@ import co.edu.uniandes.testrunner.web.transversal.WebConstants;
 @ViewScoped
 public class WebMB extends BaseMB {
 
-	private String lighthouseURL;
+    private String lighthouseURL;
 
-	private String cypressURL;
+    private String cypressURL;
 
-	private String cypressTest;
+    private String cypressTest;
 
     private String pitestFolder;
 
@@ -47,26 +47,10 @@ public class WebMB extends BaseMB {
         infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
     }
 
-	public void cypressRandomTest() {
-		testEJB.saveCypressRandomTest(cypressURL);
-		infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
-	}
 
-	public void cypressDinamicTest() {
-		infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
-		// lightHouseEJB.saveCypressRandomTest(testRun, null);
-	}
-
-	public void upload() {
-		if (file != null) {
-			testEJB.uploadFile(file);
-			infoMessage(WebConstants.UPLOAD_FILE + file.getFileName());
-		}
-	}
-
-	public String getLighthouseURL() {
-		return lighthouseURL;
-	}
+    public String getLighthouseURL() {
+        return lighthouseURL;
+    }
 
     public void setCypressTest(String cypressTest) {
         this.cypressTest = cypressTest;
