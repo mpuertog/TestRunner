@@ -77,23 +77,26 @@ public class AndroidEJBImplementation implements AndroidEJB {
 		CommandRunner androidRunner = CommandRunner.getRunner();
 		androidRunner.setWorkingDirectory(new File(workFolder));
 		wildardReplaceUtil.replaceCalabashConfig(screenshotsFolder, configDestination);
-
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					System.out.println("ANTES SLEEP");
-					CommandRunner.getRunner().runCommand(emulatorString);
-					Thread.sleep(10000);
-					System.out.println("DESPUES SLEEP");
-					androidRunner.runCommand(ApplicationConstants.KILL_EMULATOR);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+		Thread emulatorThread = new Thread(() -> {
+			try {
+				androidRunner.runCommand("pwd");
+				androidRunner.runCommand("calabash-android resign " + apkName);
+				androidRunner.runCommand(emulatorString);
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		});
-		t.start();
-
+		emulatorThread.start();
+		Thread testThread = new Thread(() -> {
+			try {
+				Thread.sleep(25000);
+				androidRunner.runCommand("calabash-android run " + apkName);
+				androidRunner.runCommand(ApplicationConstants.KILL_EMULATOR);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		});
+		testThread.start();
 	}
 
 }

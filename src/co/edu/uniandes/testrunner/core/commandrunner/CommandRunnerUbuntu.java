@@ -42,9 +42,8 @@ public class CommandRunnerUbuntu extends CommandRunner {
 			while ((s = reader.readLine()) != null) {
 				logger.info(s);
 			}
-			process.waitFor();
 			logger.info(ApplicationLogMessages.LOG_COMMAND_COMPLETE);
-		} catch (IOException | InterruptedException e) {
+		} catch (IOException e) {
 			logger.error(ApplicationLogMessages.LOG_COMMAND_ERROR, e);
 		}
 	}
