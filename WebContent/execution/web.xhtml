@@ -60,11 +60,11 @@
                         value="Pruebas End to End utilizando la plataforma Cypress."></h:outputText>
                     <h:outputText value="Ingrese el script a ejecutar: "
                                   style="width:85%" />
-                    <p:inputTextarea id="cypressDinTest" value="#{webMB.cypressTest}"
+                    <p:inputTextarea id="cypressDinTest" value=""
                                      required="true" requiredMessage="Debe ingresar un test" cols="80">
                     </p:inputTextarea>
                     <p:commandButton value="Evaluar..." update="layoutForm:messages"
-                                     actionListener="#{webMB.cypressDinamicTest()}"
+                                     actionListener=""
                                      partialSubmit="true" process="cypressDinamicForm" async="true" />
                 </h:panelGrid>
             </p:fieldset>
