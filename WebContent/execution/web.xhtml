@@ -50,7 +50,7 @@
             </p:fieldset>
         </h:form>
 
-        <h:form id="cypressDinamicForm">
+        <!--<h:form id="cypressDinamicForm">
             <p:fieldset legend="Cypress End to End Testing" toggleable="true"
                         toggleSpeed="500">
                 <h:panelGrid columns="2" cellpadding="5">
@@ -68,7 +68,7 @@
                                      partialSubmit="true" process="cypressDinamicForm" async="true" />
                 </h:panelGrid>
             </p:fieldset>
-        </h:form>
+        </h:form>-->
         <h:form id="cypressUploadForm">
             <p:fieldset legend="Cypress End to End Testing" toggleable="true"
                         toggleSpeed="500">
@@ -80,8 +80,12 @@
                     <h:outputText value="Agregue el archivo donde se encuentra el test"
                                   style="width:85%" />
                     <p:growl id="messages" showDetail="true" />
-                    <p:fileUpload value="#{webMB.file}" mode="simple" skinSimple="true"/>
-                    <p:commandButton value="Submit" ajax="false" actionListener="#{webMB.upload}"/>
+                    <p:fileUpload 
+                        id="documento"                                                          
+                        fileUploadListener="#{webMB.upload}"                        
+                        allowTypes="/(\.|\/)(js)$/"
+                        mode="advanced"
+                        auto="true"/>                    
                 </h:panelGrid>
             </p:fieldset>
         </h:form>

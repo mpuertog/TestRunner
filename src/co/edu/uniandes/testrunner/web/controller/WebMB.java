@@ -6,12 +6,15 @@ import javax.faces.bean.ViewScoped;
 
 import co.edu.uniandes.testrunner.web.business.LightHouseEJB;
 import co.edu.uniandes.testrunner.web.transversal.WebConstants;
+import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import org.apache.commons.io.IOUtils;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
+import sun.nio.ch.IOUtil;
 
 @ManagedBean
 @ViewScoped
@@ -24,10 +27,7 @@ public class WebMB extends BaseMB {
     private String cypressTest;
 
     private String pitestFolder;
-    
-    private UploadedFile file;
- 
-    
+
     @EJB
     private LightHouseEJB lightHouseEJB;
 
@@ -45,12 +45,11 @@ public class WebMB extends BaseMB {
         infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
         // lightHouseEJB.saveCypressRandomTest(testRun, null);
     }
-    
-    public void upload() {
-        if (file != null) {
-            lightHouseEJB.upploadFile(file);
-            infoMessage(WebConstants.UPLOAD_FILE + file.getFileName());
-        }
+
+    public void upload(FileUploadEvent event) throws IOException {        
+        lightHouseEJB.uploadFile(event);
+        infoMessage(WebConstants.UPLOAD_FILE);
+
     }
 
     public String getLighthouseURL() {
@@ -84,15 +83,5 @@ public class WebMB extends BaseMB {
     public void setCypressTest(String cypressTest) {
         this.cypressTest = cypressTest;
     }
-
-    public UploadedFile getFile() {
-        return file;
-    }
-
-    public void setFile(UploadedFile file) {
-        this.file = file;
-    }
-    
-    
 
 }

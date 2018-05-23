@@ -63,5 +63,40 @@ public class WildardReplaceUtil {
 			}
 		}
 	}
+        
+        public void runTestCypressByFile(String filePath) {
+		BufferedReader bufferedReader = null;
+		StringBuilder stringBuilder = new StringBuilder();
+		String path = "/WEB-INF/codetemplates/cypressTest/" + filePath;
+		try {
+			InputStream inStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(path);
+			bufferedReader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
+			String line = null;
+			String ls = System.getProperty("line.separator");
+			while ((line = bufferedReader.readLine()) != null) {
+				stringBuilder.append(line);
+				stringBuilder.append(ls);
+			}
+
+			String text = stringBuilder.toString();
+			File targetFile = new File(filePath);
+			targetFile.delete();
+			targetFile = new File(filePath);
+
+			try (PrintWriter out = new PrintWriter(filePath)) {
+				out.println(text);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (bufferedReader != null) {
+				try {
+					bufferedReader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 }
