@@ -18,5 +18,21 @@ public interface TestEJB {
 	public void savePitestTest(TestRun testRun, String command);
 
 	public void uploadFile(FileUploadEvent event) throws IOException;
+=======
+import org.primefaces.model.UploadedFile;
+
+@Local
+public interface TestEJB {
+
+	public void saveLighthouseTest(String command);
+
+	public void saveCypressRandomTest(String command);
+
+	public void saveCypressE2ETest(String command);
+
+	public void savePitestTest(TestRun testRun, String command);
+
+	public void uploadFile(UploadedFile file);
+>>>>>>> origin/master
 
 }
