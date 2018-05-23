@@ -1,90 +1,70 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                template="../WEB-INF/templates/Layout.xhtml">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="../WEB-INF/templates/Layout.xhtml">
 
-    <ui:define name="content">
-        <h1 class="aw-page-title">Ejecución de Pruebas sobre Aplicaciones
-            Web</h1>
+	<ui:define name="content">
+		<h1 class="aw-page-title">Ejecución de Pruebas sobre Aplicaciones
+			Web</h1>
 
-        <h:form id="pwaForm">
-            <p:fieldset legend="PWA" toggleable="true" toggleSpeed="500">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:graphicImage
-                        value="/resources/algaworks/images/pwa-lighthouse.png" width="80" />
-                    <h:outputText
-                        value="Evaluación  de características de PWA (Progressive Web App) utilizando la herramienta Google Lighthouse."></h:outputText>
-                    <h:outputText value="Ingrese la URL a analizar: " style="width:85%" />
-                    <p:inputText id="lighthouseInput" value="#{webMB.lighthouseURL}"
-                                 size="50" maxlength="1000" required="true"
-                                 requiredMessage="Debe ingresar una URL para la evaluación de PWA">
-                        <p:watermark for="lighthouseInput" value="http://www.example.com" />
-                    </p:inputText>
-                    <p:commandButton value="Ejecutar" update="layoutForm:messages"
-                                     actionListener="#{webMB.lighthouseTest()}" partialSubmit="true"
-                                     process="pwaForm" async="true" />
-                </h:panelGrid>
-            </p:fieldset>
-        </h:form>
+		<h:form id="pwaForm">
+			<p:fieldset legend="PWA" toggleable="true" toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:graphicImage
+						value="/resources/algaworks/images/pwa-lighthouse.png" width="80" />
+					<h:outputText
+						value="Evaluación  de características de PWA (Progressive Web App) utilizando la herramienta Google Lighthouse."></h:outputText>
+					<h:outputText value="Ingrese la URL a analizar: " style="width:85%" />
+					<p:inputText id="lighthouseInput" value="#{webMB.lighthouseURL}"
+						size="50" maxlength="1000" required="true"
+						requiredMessage="Debe ingresar una URL para la evaluación de PWA">
+						<p:watermark for="lighthouseInput" value="http://www.example.com" />
+					</p:inputText>
+					<p:commandButton value="Ejecutar" update="layoutForm:messages"
+						actionListener="#{webMB.lighthouseTest()}" partialSubmit="true"
+						process="pwaForm" async="true" />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
 
-        <h:form id="randomForm">
-            <p:fieldset legend="Random Testing" toggleable="true"
-                        toggleSpeed="500">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:graphicImage value="/resources/algaworks/images/cypress.png"
-                                    width="100" />
-                    <h:outputText
-                        value="Ejecución de pruebas aleatorias utilizando la plataforma Cypress."></h:outputText>
-                    <h:outputText value="Ingrese la URL a analizar: " style="width:85%" />
-                    <p:inputText id="cypressInput" value="#{webMB.cypressURL}"
-                                 size="50" maxlength="1000" required="true"
-                                 requiredMessage="Debe ingresar una URL para ejecutar Random Testing">
-                        <p:watermark for="cypressInput" value="http://www.example.com" />
-                    </p:inputText>
-                    <p:commandButton value="Evaluar..." update="layoutForm:messages"
-                                     action="#{webMB.cypressRandomTest()}" partialSubmit="true"
-                                     process="randomForm" async="true" />
-                </h:panelGrid>
-            </p:fieldset>
-        </h:form>
+		<h:form id="randomForm">
+			<p:fieldset legend="Random Testing" toggleable="true"
+				toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:graphicImage value="/resources/algaworks/images/cypress.png"
+						width="100" />
+					<h:outputText
+						value="Ejecución de pruebas aleatorias utilizando la plataforma Cypress."></h:outputText>
+					<h:outputText value="Ingrese la URL a analizar: " style="width:85%" />
+					<p:inputText id="cypressInput" value="#{webMB.cypressURL}"
+						size="50" maxlength="1000" required="true"
+						requiredMessage="Debe ingresar una URL para ejecutar Random Testing">
+						<p:watermark for="cypressInput" value="http://www.example.com" />
+					</p:inputText>
+					<p:commandButton value="Evaluar..." update="layoutForm:messages"
+						action="#{webMB.cypressRandomTest()}" partialSubmit="true"
+						process="randomForm" async="true" />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
 
-        <!--<h:form id="cypressDinamicForm">
-            <p:fieldset legend="Cypress End to End Testing" toggleable="true"
-                        toggleSpeed="500">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:graphicImage value="/resources/algaworks/images/cypress.png"
-                                    width="100" />
-                    <h:outputText
-                        value="Pruebas End to End utilizando la plataforma Cypress."></h:outputText>
-                    <h:outputText value="Ingrese el script a ejecutar: "
-                                  style="width:85%" />
-                    <p:inputTextarea id="cypressDinTest" value=""
-                                     required="true" requiredMessage="Debe ingresar un test" cols="80">
-                    </p:inputTextarea>
-                    <p:commandButton value="Evaluar..." update="layoutForm:messages"
-                                     actionListener=""
-                                     partialSubmit="true" process="cypressDinamicForm" async="true" />
-                </h:panelGrid>
-            </p:fieldset>
-        </h:form>-->
-        <h:form id="cypressUploadForm">
-            <p:fieldset legend="Cypress End to End Testing" toggleable="true"
-                        toggleSpeed="500">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:graphicImage value="/resources/algaworks/images/cypress.png"
-                                    width="100" />
-                    <h:outputText
-                        value="Pruebas End to End utilizando la plataforma Cypress."></h:outputText>
-                    <h:outputText value="Agregue el archivo donde se encuentra el test"
-                                  style="width:85%" />                    
-                    <p:fileUpload 
-                        id="documento"                                                          
-                        fileUploadListener="#{webMB.upload}"                        
-                        allowTypes="/(\.|\/)(js)$/"/>                    
-                </h:panelGrid>
-            </p:fieldset>
-        </h:form>
-    </ui:define>
+		<h:form id="cypressUploadForm">
+			<p:fieldset legend="Cypress End to End Testing" toggleable="true"
+				toggleSpeed="500">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:graphicImage value="/resources/algaworks/images/cypress.png"
+						width="100" />
+					<h:outputText
+						value="Pruebas End to End utilizando la plataforma Cypress."></h:outputText>
+					<h:outputText value="Agregue el archivo donde se encuentra el test"
+						style="width:85%" />
+					<p:fileUpload id="documento" fileUploadListener="#{webMB.upload}"
+						allowTypes="/(\.|\/)(js)$/" />
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+
+	</ui:define>
 </ui:composition>
