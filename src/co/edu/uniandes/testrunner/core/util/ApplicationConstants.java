@@ -26,5 +26,6 @@ public class ApplicationConstants {
 	public static final String LIGHTHOUSE_POJO = "LighthousePOJO";
 	public static final String CALABASH_POJO = "CalabashAndroidPOJO";
 	public static final String PATH_SESSION_KEY = "pathProperties";
+	public static final String KILL_EMULATOR = "pkill qemu-system-i38";
 
 }

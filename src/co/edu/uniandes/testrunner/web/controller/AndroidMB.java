@@ -1,16 +1,25 @@
 package co.edu.uniandes.testrunner.web.controller;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
+import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 
+import co.edu.uniandes.testrunner.core.commandrunner.CommandRunner;
+import co.edu.uniandes.testrunner.core.util.ApplicationConstants;
+import co.edu.uniandes.testrunner.core.util.FilesConstants;
 import co.edu.uniandes.testrunner.web.business.AndroidEJB;
+import co.edu.uniandes.testrunner.web.configuration.os.PathConfiguratorPropertyKeys;
 import co.edu.uniandes.testrunner.web.persistance.entities.AndroidEmulator;
 import co.edu.uniandes.testrunner.web.transversal.FileUtil;
 import co.edu.uniandes.testrunner.web.transversal.WebConstants;
@@ -25,12 +34,15 @@ public class AndroidMB extends BaseMB {
 	private UploadedFile file;
 	private UploadedFile image;
 	private String gherkinCode;
+	private Properties properties;
 
 	@EJB
 	private AndroidEJB androidEJB;
 
 	@PostConstruct
 	public void init() {
+		properties = (Properties) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+				.get(ApplicationConstants.PATH_SESSION_KEY);
 		androidEmulatorList = androidEJB.listAllEmulators();
 	}
 
@@ -46,6 +58,19 @@ public class AndroidMB extends BaseMB {
 		}
 		String encodedGherkinCode = FileUtil.getBase64FromString(gherkinCode);
 		String encodedAPK = FileUtil.getBase64FromString(new String(file.getContents()));
+		String userPath = properties.get(PathConfiguratorPropertyKeys.USER_PROFILE).toString().trim();
+		String ruta = userPath + FilesConstants.CALABASH_PATH;
+		CommandRunner.getRunner().runCommand(String.format(FilesConstants.CALABASH_DELETE_APK, ruta));
+		byte[] contenido;
+		try {
+			contenido = IOUtils.toByteArray(file.getInputstream());
+			FileOutputStream fos = new FileOutputStream(ruta + file.getFileName());
+			fos.write(contenido);
+			fos.flush();
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		androidEJB.runAndroidE2ETest(file.getFileName(), encodedGherkinCode, encodedAPK, selectedEmulator.getCommand());
 		infoMessage(WebConstants.CYPRESS_RUNNING + file.getFileName());
 	}

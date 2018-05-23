@@ -13,7 +13,7 @@ public class FilesConstants {
 	public static final String CALABASH_ROOT_FOLDER = "androidTest";
 	public static final String CALABASH_CONFIG_SRC = "/WEB-INF/codetemplates/cucumber.yml";
 	public static final String CALABASH_SCREENSHOTS = "%s/screenshots/";
-	public static final String CALABASH_PATH = "/TestRunner/webTest/androidTest/current/";
+	public static final String CALABASH_PATH = "/TestRunner/androidTest/current/";
 	public static final String CALABASH_DELETE_APK = "find %s -type f -name '*.apk' -delete";
 
 	public static final String CYPRESS_FILENAME = "cypress.json";

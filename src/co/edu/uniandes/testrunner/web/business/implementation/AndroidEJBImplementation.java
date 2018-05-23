@@ -72,17 +72,24 @@ public class AndroidEJBImplementation implements AndroidEJB {
 		WildardReplaceUtil wildardReplaceUtil = new WildardReplaceUtil();
 		String workFolder = userPath + FilesConstants.CALABASH_PATH;
 		String screenshotsFolder = workFolder + "sreenshots/" + testRun.getId();
-		String configDestination = workFolder + "config/";
+		String configDestination = workFolder + "config/cucumber.yml";
 		new File(screenshotsFolder).mkdirs();
 		CommandRunner androidRunner = CommandRunner.getRunner();
 		androidRunner.setWorkingDirectory(new File(workFolder));
-		androidRunner.runCommand(String.format(FilesConstants.CALABASH_DELETE_APK, workFolder));
 		wildardReplaceUtil.replaceCalabashConfig(screenshotsFolder, configDestination);
 
 		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				CommandRunner.getRunner().runCommand(emulatorString);
+				try {
+					System.out.println("ANTES SLEEP");
+					CommandRunner.getRunner().runCommand(emulatorString);
+					Thread.sleep(10000);
+					System.out.println("DESPUES SLEEP");
+					androidRunner.runCommand(ApplicationConstants.KILL_EMULATOR);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		t.start();
