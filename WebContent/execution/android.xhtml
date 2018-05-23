@@ -18,7 +18,8 @@
 					<h:outputText value="Seleccione el APK a analizar: "
 						style="width:85%" />
 					<p:fileUpload value="#{androidMB.file}" mode="simple"
-						skinSimple="true" />
+						skinSimple="true" allowTypes="*.apk" label="Seleccionar APK"
+						cancelLabel="Cancelar" />
 					<p:outputLabel for="emulator" value="Emulador: " />
 					<p:selectOneMenu id="emulator"
 						value="#{androidMB.selectedEmulatorID}" style="width:125px"
@@ -27,8 +28,15 @@
 						<f:selectItems value="#{androidMB.androidEmulatorList}" var="emu"
 							itemValue="#{emu.id}" />
 					</p:selectOneMenu>
-					<p:commandButton value="Submit" ajax="false"
-						actionListener="#{androidMB.upload()}" />
+					<p:outputLabel for="gherkin" value="Código prueba: " />
+					<p:inputTextarea id="gherkin" rows="6" cols="50"
+						value="#{androidMB.gherkinCode}">
+						<p:watermark for="gherkin"
+							value="Código Gherkin de la prueba a ejecutar" id="watermark" />
+					</p:inputTextarea>
+					<p:commandButton value="Ejecutar Test E2E" ajax="false"
+						actionListener="#{androidMB.runAndroidE2ETest()}"
+						process=":androidForm" />
 				</h:panelGrid>
 			</p:fieldset>
 			<p:fieldset legend="Visual Regresion" toggleable="true"

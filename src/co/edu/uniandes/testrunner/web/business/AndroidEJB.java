@@ -12,4 +12,6 @@ public interface AndroidEJB {
 	public List<AndroidEmulator> listAllEmulators();
 
 	public AndroidEmulator findAndroidEmulatorByID(int androidEmulatorid);
+
+	public void runAndroidE2ETest(String apkName, String gherkinCode, String encodedTest, String emulator);
 }

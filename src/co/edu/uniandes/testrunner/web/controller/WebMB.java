@@ -20,26 +20,21 @@ import sun.nio.ch.IOUtil;
 @ViewScoped
 public class WebMB extends BaseMB {
 
-    private String lighthouseURL;
+	private String lighthouseURL;
 
-    private String cypressURL;
+	private String cypressURL;
 
-    private String cypressTest;
+	private String cypressTest;
 
     private String pitestFolder;
 
     @EJB
     private LightHouseEJB lightHouseEJB;
 
-    public void lighthouseTest() {
-        lightHouseEJB.saveLighthouseTest(lighthouseURL);
-        infoMessage(WebConstants.LIGHTHOUSE_RUNNING + lighthouseURL);
-    }
+	private UploadedFile file;
 
-    public void cypressRandomTest() {
-        lightHouseEJB.saveCypressRandomTest(cypressURL);
-        infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
-    }
+	@EJB
+	private TestEJB testEJB;
 
     public void cypressDinamicTest() {
         infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
@@ -52,33 +47,38 @@ public class WebMB extends BaseMB {
 
     }
 
-    public String getLighthouseURL() {
-        return lighthouseURL;
-    }
+	public void cypressRandomTest() {
+		testEJB.saveCypressRandomTest(cypressURL);
+		infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
+	}
 
-    public void setLighthouseURL(String lighthouseURL) {
-        this.lighthouseURL = lighthouseURL;
-    }
+	public void cypressDinamicTest() {
+		infoMessage(WebConstants.CYPRESS_RUNNING + cypressURL);
+		// lightHouseEJB.saveCypressRandomTest(testRun, null);
+	}
 
-    public String getCypressURL() {
-        return cypressURL;
-    }
+	public void upload() {
+		if (file != null) {
+			testEJB.uploadFile(file);
+			infoMessage(WebConstants.UPLOAD_FILE + file.getFileName());
+		}
+	}
 
-    public void setCypressURL(String cypressURL) {
-        this.cypressURL = cypressURL;
-    }
+	public String getLighthouseURL() {
+		return lighthouseURL;
+	}
 
-    public String getPitestFolder() {
-        return pitestFolder;
-    }
+	public void setLighthouseURL(String lighthouseURL) {
+		this.lighthouseURL = lighthouseURL;
+	}
 
-    public void setPitestFolder(String pitestFolder) {
-        this.pitestFolder = pitestFolder;
-    }
+	public String getCypressURL() {
+		return cypressURL;
+	}
 
-    public String getCypressTest() {
-        return cypressTest;
-    }
+	public void setCypressURL(String cypressURL) {
+		this.cypressURL = cypressURL;
+	}
 
     public void setCypressTest(String cypressTest) {
         this.cypressTest = cypressTest;

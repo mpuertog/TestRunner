@@ -1,0 +1,2 @@
+screenshots: SCREENSHOT_PATH=SCW
+custom: SCREENSHOT_VIA_USB=false -p screenshots
